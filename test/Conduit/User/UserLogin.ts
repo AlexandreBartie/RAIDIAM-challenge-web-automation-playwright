@@ -40,6 +40,10 @@ export class UserLoginScript extends WebTestScript<
 
   private createTestCases(): void {
     this.addTestCase('Should login using valid input data', {})
+    this.addTestCase('Should validate not exist email', {
+      email: 'bartie_bartie@hotmail.com', 
+    })
+    this.addTestCase('Should validate blank fields data', {})
   }
 
   async run(flow: DataFlowType): Promise<void> {
