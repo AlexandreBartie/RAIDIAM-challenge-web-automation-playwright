@@ -1,0 +1,30 @@
+{
+  "name": "autotest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.27.1"
+  },
+  "scripts": {
+    "test-show": "npx playwright test --headed",
+    "test-ui": "npx playwright test --ui",
+    "test-fast": "npx playwright test"
+  },
+  "dependencies": {
+    "eslint-plugin-react": "^7.20.3",
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^3.3.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5",
+    "@types/jest": "^29.2.0",
+    "@types/node": "^18.11.8",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "playwright": "^1.27.1",
+    "playwright-core": "^1.27.1",
+    "typescript": "^4.8.4"
+  }
+
+}

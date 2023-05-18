@@ -1,0 +1,8 @@
+node_modules/
+/playwright-report/
+/playwright/.cache/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/test-results/
+/test/test*.spec.ts
