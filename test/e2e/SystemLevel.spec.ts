@@ -1,11 +1,11 @@
 import { test } from '@playwright/test'
 
 import { MainPage } from '../Conduit/MainPage'
-import { LoginAccountScript } from '../Conduit/User/loginAccount'
+import { UserLoginScript } from '../Conduit/User/UserLogin'
 
 const main = new MainPage()
 
-const script = new LoginAccountScript()
+const script = new UserLoginScript()
 
 test.describe(script.name, () => {
   test.beforeAll(async ({ browser }) => {

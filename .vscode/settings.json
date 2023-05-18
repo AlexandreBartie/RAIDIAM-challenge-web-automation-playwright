@@ -23,11 +23,11 @@
       "group": "Default"
     },
     {
-      "filePath": "src\\TestScripts\\Grocery\\LoginAccount",
+      "filePath": "src\\TestScripts\\Grocery\\UserLogin",
       "group": "Default"
     },
     {
-      "filePath": "src\\TestScripts\\User\\loginAccount",
+      "filePath": "src\\TestScripts\\User\\UserLogin",
       "group": "Default"
     },
     {
