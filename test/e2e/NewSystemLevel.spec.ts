@@ -12,7 +12,7 @@ for (const target of e2e.targets)
 
     for (const testCase of target.testCases) {
       test(testCase.title, async () => {
-        await target.run(testCase.data)
+        await target.run(testCase.data, testCase.success)
       })
     }
   })

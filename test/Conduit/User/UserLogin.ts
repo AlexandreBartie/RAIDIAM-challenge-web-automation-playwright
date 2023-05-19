@@ -13,7 +13,7 @@ export class UserLoginMapping extends MainPage {
   public Email = this.map.SetTextBox('Email')
   public Password = this.map.SetTextBox('Password')
   public Submit = this.map.SetButton('Sign in')
-  public Message = this.map.SetList('list')
+  public Message = this.map.SetList()
 }
 
 export class UserLoginPage extends UserLoginMapping {
@@ -25,13 +25,10 @@ export class UserLoginPage extends UserLoginMapping {
     await this.Submit.click()
     await this.pause(1)
 
-    if (success)
-    {
-
-    }
-    else
-    {
-
+    if (success) {
+      console.log('ok')
+    } else {
+      console.log('not ok')
     }
   }
 }

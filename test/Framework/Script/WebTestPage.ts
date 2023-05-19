@@ -2,6 +2,7 @@ import { Locator, Page } from 'playwright-core'
 import {
   WebButton,
   WebLink,
+  WebList,
   WebTextBox,
   findElementBy,
   roleType,

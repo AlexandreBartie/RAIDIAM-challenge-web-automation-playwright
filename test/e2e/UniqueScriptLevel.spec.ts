@@ -14,7 +14,7 @@ test.describe(script.name, () => {
 
   for (const testCase of script.testCases) {
     test(testCase.title, async () => {
-      await script.run(testCase.data)
+      await script.run(testCase.data, testCase.success)
     })
   }
 })

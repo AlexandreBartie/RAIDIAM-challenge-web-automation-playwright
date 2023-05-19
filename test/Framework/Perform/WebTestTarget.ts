@@ -16,8 +16,8 @@ export class WebTestTarget {
     return this.script.testCases
   }
 
-  async run(flow: DataFlowType): Promise<void> {
-    return await this.script.run(flow)
+  async run(flow: DataFlowType, success: boolean): Promise<void> {
+    return await this.script.run(flow, success)
   }
 
   constructor(order: string, script: IWebTestScript) {

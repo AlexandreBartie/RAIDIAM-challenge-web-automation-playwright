@@ -178,7 +178,8 @@ export class WebButton extends WebTestElement {
 }
 
 export class WebLink extends WebTestElement {
-  setup(role: roleType): WebButton {
+  setup(title: string, role: roleType): WebLink {
+    this.setKey(title)
     this.setRole(role)
     return this
   }
@@ -192,11 +193,11 @@ export class WebList extends WebTestElement {
     this.setRole(role)
     return this
   }
-  async AssertItem(title: string): Promise<void> {
-    await this.setLocator().click()
-  }
+  // async AssertItem(title: string): Promise<void> {
+  //   await this.setLocator().click()
+  // }
 
-  async Assert(success = true) {
-    await expect(success).toBeTruthy()
-  }
+  // async Assert(success = true) {
+  //   await expect(success).toBeTruthy()
+  // }
 }
