@@ -133,14 +133,16 @@ export class WebTestLocator {
   public setRole(role: roleType): void {
     this._role = role
   }
-  public setLocator(): void {
+  public setLocator(filter = ''): void {
     switch (this.findby) {
       case findElementBy.findByTitle:
         this._locator = this.web.findByPlaceholder(this.key)
         break
 
       case findElementBy.findByRole:
-        this._locator = this.web.findByRole(this.role, this.key)
+        if (filter == '')
+          this._locator = this.web.findByRoleFilter(this.role, filter)
+        else this._locator = this.web.findByRole(this.role, this.key)
         break
 
       default:
@@ -153,51 +155,3 @@ export class WebTestLocator {
 }
 
 export class WebTestElement extends WebTestLocator {}
-
-export class WebTextBox extends WebTestElement {
-  setup(title: string, findby: findElementBy): WebTextBox {
-    this.setKey(title)
-    this.setFindby(findby)
-    return this
-  }
-
-  async fill(text: string): Promise<void> {
-    await this.locator.fill(text)
-  }
-}
-
-export class WebButton extends WebTestElement {
-  setup(title: string, role: roleType): WebButton {
-    this.setKey(title)
-    this.setRole(role)
-    return this
-  }
-  async click(): Promise<void> {
-    await this.locator.click()
-  }
-}
-
-export class WebLink extends WebTestElement {
-  setup(title: string, role: roleType): WebLink {
-    this.setKey(title)
-    this.setRole(role)
-    return this
-  }
-  async click(): Promise<void> {
-    await this.locator.click()
-  }
-}
-
-export class WebList extends WebTestElement {
-  setup(role: roleType): WebList {
-    this.setRole(role)
-    return this
-  }
-  // async AssertItem(title: string): Promise<void> {
-  //   await this.setLocator().click()
-  // }
-
-  // async Assert(success = true) {
-  //   await expect(success).toBeTruthy()
-  // }
-}

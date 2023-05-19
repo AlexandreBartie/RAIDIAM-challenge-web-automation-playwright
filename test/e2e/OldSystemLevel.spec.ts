@@ -1,9 +1,9 @@
 import { test } from '@playwright/test'
 
-import { MainPage } from '../Conduit/MainPage'
+import { SystemPage } from '../Conduit/SystemPage'
 import { UserLoginScript } from '../Conduit/User/UserLogin'
 
-const main = new MainPage()
+const main = new SystemPage()
 
 const script = new UserLoginScript()
 

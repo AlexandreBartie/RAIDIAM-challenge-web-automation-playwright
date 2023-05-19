@@ -1,4 +1,4 @@
-import { MainPage } from '../MainPage'
+import { SystemPage } from '../SystemPage'
 import { DataFlowType, TestData } from '../../Framework/Design/TestData'
 import { WebTestScript } from '../../Framework/Script/WebTestScript'
 
@@ -9,7 +9,7 @@ export class UserLoginData extends TestData {
   msg = ''
 }
 
-export class UserLoginMapping extends MainPage {
+export class UserLoginMapping extends SystemPage {
   public Email = this.map.SetTextBox('Email')
   public Password = this.map.SetTextBox('Password')
   public Submit = this.map.SetButton('Sign in')
@@ -26,9 +26,9 @@ export class UserLoginPage extends UserLoginMapping {
     await this.pause(1)
 
     if (success) {
-      console.log('ok')
+      await this.AssertItem(flow.msg)
     } else {
-      console.log('not ok')
+      await this.Message.AssertItem(flow.msg)
     }
   }
 }

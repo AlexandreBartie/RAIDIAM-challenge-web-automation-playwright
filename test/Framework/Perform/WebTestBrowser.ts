@@ -1,5 +1,5 @@
 import { Browser, Page } from 'playwright-core'
-import { WebTestPage } from './WebTestPage'
+import { WebTestPage } from '../Script/WebTestPage'
 
 export class WebTestBrowser extends WebTestPage {
   public url: string

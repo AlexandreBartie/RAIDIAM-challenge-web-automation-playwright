@@ -2,7 +2,7 @@ import { test } from '@playwright/test'
 
 import { IWebTestScript } from '../Script/WebTestScript'
 import { WebTestScope } from './WebTestScope'
-import { WebTestBrowser } from '../Script/WebTestBrowser'
+import { WebTestBrowser } from './WebTestBrowser'
 
 export class WebTestLaucher {
   readonly scope: WebTestScope

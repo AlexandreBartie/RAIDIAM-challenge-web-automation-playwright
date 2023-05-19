@@ -1,7 +1,7 @@
 import { Browser, Page } from 'playwright-core'
-import { WebTestBrowser } from '../Script/WebTestBrowser'
 import { IWebTestScript } from '../Script/WebTestScript'
 import { WebTestTarget, WebTestTargetList } from './WebTestTarget'
+import { WebTestBrowser } from './WebTestBrowser'
 
 export class WebTestScope {
   private main: WebTestBrowser

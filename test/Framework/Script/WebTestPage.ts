@@ -1,37 +1,8 @@
 import { Locator, Page } from 'playwright-core'
-import {
-  WebButton,
-  WebLink,
-  WebList,
-  WebTextBox,
-  findElementBy,
-  roleType,
-} from './WebTestElement'
+import { SystemMapping } from '../../Conduit/SystemMapping'
+import { roleType } from './WebTestElement'
 
-export class WebTestMapping {
-  private web: WebTestPage
-
-  constructor(web: WebTestPage) {
-    this.web = web
-  }
-  SetTextBox(title: string): WebTextBox {
-    return new WebTextBox(this.web).setup(title, findElementBy.findByTitle)
-  }
-
-  SetButton(title: string): WebButton {
-    return new WebButton(this.web).setup(title, 'button')
-  }
-
-  SetLink(title: string): WebLink {
-    return new WebLink(this.web).setup(title, 'link')
-  }
-
-  SetList(): WebList {
-    return new WebList(this.web).setup('list')
-  }
-}
-
-export class WebTestCore {
+export class WebTestAssert {
   public page: Page
 
   SetPage(page: Page): void {
@@ -39,10 +10,8 @@ export class WebTestCore {
   }
 }
 
-export class WebTestPage extends WebTestCore {
-  public page: Page
-
-  public map = new WebTestMapping(this)
+export class WebTestPage extends WebTestAssert {
+  public map = new SystemMapping(this)
 
   findByPlaceholder(title: string): Locator {
     return this.page.getByPlaceholder(title)

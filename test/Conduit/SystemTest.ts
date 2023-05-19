@@ -1,11 +1,11 @@
 import { Browser, Page } from 'playwright-core'
 import { WebTestScope } from '../Framework/Perform/WebTestScope'
-import { MainPage } from './MainPage'
+import { SystemPage } from './SystemPage'
 import { UserLoginScript } from './User/UserLogin'
 import { WebTestTarget } from '../Framework/Perform/WebTestTarget'
 
 export class SystemTest {
-  private main = new MainPage()
+  private main = new SystemPage()
 
   private scope = new WebTestScope(this.main)
 
