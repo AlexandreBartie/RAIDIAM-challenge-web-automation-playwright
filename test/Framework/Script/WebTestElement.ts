@@ -1,95 +1,6 @@
 import { Locator } from 'playwright-core'
 import { WebTestPage } from './WebTestPage'
-
-export type roleType =
-  | 'alert'
-  | 'alertdialog'
-  | 'application'
-  | 'article'
-  | 'banner'
-  | 'blockquote'
-  | 'button'
-  | 'caption'
-  | 'cell'
-  | 'checkbox'
-  | 'code'
-  | 'columnheader'
-  | 'combobox'
-  | 'complementary'
-  | 'contentinfo'
-  | 'definition'
-  | 'deletion'
-  | 'dialog'
-  | 'directory'
-  | 'document'
-  | 'emphasis'
-  | 'feed'
-  | 'figure'
-  | 'form'
-  | 'generic'
-  | 'grid'
-  | 'gridcell'
-  | 'group'
-  | 'heading'
-  | 'img'
-  | 'insertion'
-  | 'link'
-  | 'list'
-  | 'listbox'
-  | 'listitem'
-  | 'log'
-  | 'main'
-  | 'marquee'
-  | 'math'
-  | 'meter'
-  | 'menu'
-  | 'menubar'
-  | 'menuitem'
-  | 'menuitemcheckbox'
-  | 'menuitemradio'
-  | 'navigation'
-  | 'none'
-  | 'note'
-  | 'option'
-  | 'paragraph'
-  | 'presentation'
-  | 'progressbar'
-  | 'radio'
-  | 'radiogroup'
-  | 'region'
-  | 'row'
-  | 'rowgroup'
-  | 'rowheader'
-  | 'scrollbar'
-  | 'search'
-  | 'searchbox'
-  | 'separator'
-  | 'slider'
-  | 'spinbutton'
-  | 'status'
-  | 'strong'
-  | 'subscript'
-  | 'superscript'
-  | 'switch'
-  | 'tab'
-  | 'table'
-  | 'tablist'
-  | 'tabpanel'
-  | 'term'
-  | 'textbox'
-  | 'time'
-  | 'timer'
-  | 'toolbar'
-  | 'tooltip'
-  | 'tree'
-  | 'treegrid'
-  | 'treeitem'
-
-export enum findElementBy {
-  findByID = 'id',
-  findByRole = 'role',
-  findByTitle = 'title',
-}
+import { findElementBy, roleType } from './WebTestTypes'
 
 export class WebTestLocator {
   readonly web: WebTestPage
@@ -133,16 +44,15 @@ export class WebTestLocator {
   public setRole(role: roleType): void {
     this._role = role
   }
-  public setLocator(filter = ''): void {
+  public setLocator(text?: string): void {
     switch (this.findby) {
       case findElementBy.findByTitle:
         this._locator = this.web.findByPlaceholder(this.key)
         break
 
       case findElementBy.findByRole:
-        if (filter == '')
-          this._locator = this.web.findByRoleFilter(this.role, filter)
-        else this._locator = this.web.findByRole(this.role, this.key)
+        if (text) this._locator = this.web.findByRoleHasText(this.role, text)
+        else this._locator = this.web.findByRoleMatchName(this.role, this.key)
         break
 
       default:
@@ -154,4 +64,20 @@ export class WebTestLocator {
   }
 }
 
-export class WebTestElement extends WebTestLocator {}
+export class WebTestElement<T> extends WebTestLocator {
+  setupByTitle(title: string): T {
+    this.setKey(title)
+    this.setFindby(findElementBy.findByTitle)
+    return this as unknown as T
+  }
+  setupByRole(role: roleType, title?: string): T {
+    this.setRole(role)
+    if (title) this.setKey(title)
+    return this as unknown as T
+  }
+
+  AssertHasText(text: string): void {
+    this.setLocator(text)
+    this.web.Assert(this.failLocator)
+  }
+}

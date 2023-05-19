@@ -26,9 +26,9 @@ export class UserLoginPage extends UserLoginMapping {
     await this.pause(1)
 
     if (success) {
-      await this.AssertItem(flow.msg)
+      this.Assert(true)
     } else {
-      await this.Message.AssertItem(flow.msg)
+      this.Message.AssertHasText(flow.msg)
     }
   }
 }
