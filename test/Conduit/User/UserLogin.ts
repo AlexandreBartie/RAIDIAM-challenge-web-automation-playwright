@@ -6,22 +6,33 @@ export class UserLoginData extends TestData {
   email = 'alexandre_bartie@hotmail.com'
   password = '1234567890'
   actions = 'SignIn'
-  success = true
-  msgs = ''
+  msg = ''
 }
 
 export class UserLoginMapping extends MainPage {
   public Email = this.map.SetTextBox('Email')
   public Password = this.map.SetTextBox('Password')
   public Submit = this.map.SetButton('Sign in')
+  public Message = this.map.SetList('list')
 }
 
 export class UserLoginPage extends UserLoginMapping {
-  async run(flow: UserLoginData): Promise<void> {
+  async run(flow: UserLoginData, success: boolean): Promise<void> {
     await this.SigninPage.click()
+    await this.pause(1)
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
     await this.Submit.click()
+    await this.pause(1)
+
+    if (success)
+    {
+
+    }
+    else
+    {
+
+    }
   }
 }
 
@@ -39,14 +50,26 @@ export class UserLoginScript extends WebTestScript<
   }
 
   private createTestCases(): void {
-    this.addTestCase('Should login using valid input data', {})
-    this.addTestCase('Should validate not exist email', {
-      email: 'bartie_bartie@hotmail.com', 
+    this.addTestCaseOk('Should login using valid input data', {})
+    this.addTestCaseNo('Should check email not found', {
+      email: 'bartie_bartie@hotmail.com',
+      msg: 'email or password is invalid',
     })
-    this.addTestCase('Should validate blank fields data', {})
+    this.addTestCaseNo('Should check password not match', {
+      password: '0987654321',
+      msg: 'email or password is invalid',
+    })
+    this.addTestCaseNo('Should check email is blank', {
+      email: '',
+      msg: `'email can't be blank'`,
+    })
+    this.addTestCaseNo('Should check password is blank', {
+      password: '',
+      msg: `'password can't be blank'`,
+    })
   }
 
-  async run(flow: DataFlowType): Promise<void> {
-    await this.local.run(this.getMerge(flow))
+  async run(flow: DataFlowType, sucess: boolean): Promise<void> {
+    await this.local.run(this.getMerge(flow), sucess)
   }
 }

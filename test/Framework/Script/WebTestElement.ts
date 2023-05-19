@@ -94,72 +94,109 @@ export enum findElementBy {
 export class WebTestLocator {
   readonly web: WebTestPage
 
-  private key: string
-
-  private findby: findElementBy
-
-  private role: roleType
-
+  private _key: string
+  private _findby: findElementBy = findElementBy.findByRole
+  private _role: roleType
   private _locator: Locator
 
-  constructor(
-    web: WebTestPage,
-    key: string,
-    findby: findElementBy,
-    role: roleType = 'none',
-  ) {
-    this.web = web
-    this.key = key
-    this.findby = findby
-    this.role = role
+  get failLocator(): boolean {
+    return !this._locator
   }
 
+  constructor(web: WebTestPage) {
+    this.web = web
+  }
   // Getter
+  public get key(): string {
+    return this._key
+  }
+  public get findby(): findElementBy {
+    return this._findby
+  }
+  public get role(): roleType {
+    return this._role
+  }
+
   public get locator(): Locator {
-    if (!this._locator) this._locator = this.findLocator()
+    if (!this._locator) this.setLocator()
 
     return this._locator
   }
 
-  private findLocator(): Locator {
-    let locator: Locator
-
+  // Setter
+  public setKey(key: string): void {
+    this._key = key
+  }
+  public setFindby(findby: findElementBy): void {
+    this._findby = findby
+  }
+  public setRole(role: roleType): void {
+    this._role = role
+  }
+  public setLocator(): void {
     switch (this.findby) {
       case findElementBy.findByTitle:
-        locator = this.web.findByPlaceholder(this.key)
+        this._locator = this.web.findByPlaceholder(this.key)
         break
 
       case findElementBy.findByRole:
-        locator = this.web.findByRole(this.role, this.key)
+        this._locator = this.web.findByRole(this.role, this.key)
         break
 
       default:
         throw new Error('Invalid operation')
     }
 
-    if (!locator)
+    if (this.failLocator)
       throw new Error(`findLocator fail! The element ${this.key} dont find!`)
-
-    return locator
   }
 }
 
 export class WebTestElement extends WebTestLocator {}
 
 export class WebTextBox extends WebTestElement {
+  setup(title: string, findby: findElementBy): WebTextBox {
+    this.setKey(title)
+    this.setFindby(findby)
+    return this
+  }
+
   async fill(text: string): Promise<void> {
     await this.locator.fill(text)
   }
 }
 
 export class WebButton extends WebTestElement {
+  setup(title: string, role: roleType): WebButton {
+    this.setKey(title)
+    this.setRole(role)
+    return this
+  }
   async click(): Promise<void> {
     await this.locator.click()
   }
 }
 
 export class WebLink extends WebTestElement {
+  setup(role: roleType): WebButton {
+    this.setRole(role)
+    return this
+  }
   async click(): Promise<void> {
     await this.locator.click()
+  }
+}
+
+export class WebList extends WebTestElement {
+  setup(role: roleType): WebList {
+    this.setRole(role)
+    return this
+  }
+  async AssertItem(title: string): Promise<void> {
+    await this.setLocator().click()
+  }
+
+  async Assert(success = true) {
+    await expect(success).toBeTruthy()
   }
 }

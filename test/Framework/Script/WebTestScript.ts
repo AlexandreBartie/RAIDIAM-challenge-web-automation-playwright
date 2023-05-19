@@ -3,7 +3,8 @@ import { WebTestPage } from './WebTestPage'
 import { TestCases } from '../Design/TestCase'
 import { DataFlowType, TestData } from '../Design/TestData'
 
-export class WebTestScript<P extends WebTestPage, D extends TestData> {
+export type IWebTestScript = WebTestScript<WebTestPage, TestData>
+export abstract class WebTestScript<P extends WebTestPage, D extends TestData> {
   name: string
   local: P
   data: D
@@ -18,7 +19,13 @@ export class WebTestScript<P extends WebTestPage, D extends TestData> {
     return this.data.getMerge(flow) as D
   }
 
-  addTestCase(title: string, data: DataFlowType): void {
-    this.testCases.Add(title, data)
+  addTestCaseOk(title: string, data: DataFlowType): void {
+    this.testCases.Add(title, data, true)
   }
+
+  addTestCaseNo(title: string, data: DataFlowType): void {
+    this.testCases.Add(title, data, false)
+  }
+
+  abstract run(flow: DataFlowType, sucess: boolean): Promise<void>
 }

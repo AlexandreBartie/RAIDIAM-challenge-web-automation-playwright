@@ -39,7 +39,7 @@ export class UserRegistrationScript extends WebTestScript<
   }
 
   private createTestCases(): void {
-    this.addTestCase('Should login using valid input data', {})
+    this.addTestCaseOk('Should login using valid input data', {})
   }
 
   async run(flow: DataFlowType): Promise<void> {

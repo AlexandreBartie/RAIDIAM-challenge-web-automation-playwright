@@ -14,15 +14,19 @@ export class WebTestMapping {
     this.web = web
   }
   SetTextBox(title: string): WebTextBox {
-    return new WebTextBox(this.web, title, findElementBy.findByTitle)
+    return new WebTextBox(this.web).setup(title, findElementBy.findByTitle)
   }
 
   SetButton(title: string): WebButton {
-    return new WebButton(this.web, title, findElementBy.findByRole, 'button')
+    return new WebButton(this.web).setup(title, 'button')
   }
 
   SetLink(title: string): WebLink {
-    return new WebLink(this.web, title, findElementBy.findByRole, 'link')
+    return new WebLink(this.web).setup(title, 'link')
+  }
+
+  SetList(): WebList {
+    return new WebList(this.web).setup('list')
   }
 }
 
@@ -45,6 +49,10 @@ export class WebTestPage extends WebTestCore {
 
   findByRole(role: roleType, name: string): Locator {
     return this.page.getByRole(role, { name: name })
+  }
+
+  findByRoleFilter(role: roleType, text: string): Locator {
+    return this.page.getByRole(role).filter({ hasText: text })
   }
 
   async pause(seconds = 1): Promise<void> {

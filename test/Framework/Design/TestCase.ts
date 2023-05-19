@@ -18,7 +18,7 @@ export class TestCase implements ITestCase {
   }
 }
 export class TestCases extends Array<TestCase> {
-  Add(title: string, data: DataFlowType): void {
-    this.push(new TestCase(title, data))
+  Add(title: string, data: DataFlowType, success = true): void {
+    this.push(new TestCase(title, data, success))
   }
 }
