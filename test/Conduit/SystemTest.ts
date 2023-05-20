@@ -7,7 +7,7 @@ import { WebTestTarget } from '../Framework/Perform/WebTestTarget'
 export class SystemTest {
   private main = new SystemPage()
 
-  private scope = new WebTestScope(this.main)
+  private scope = new WebTestScope()
 
   get targets(): Array<WebTestTarget> {
     return this.scope.targets

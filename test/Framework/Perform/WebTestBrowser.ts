@@ -10,7 +10,7 @@ export class WebTestBrowser extends WebTestPage {
   async start(browser: Browser): Promise<Page> {
     this.SetPage(await (await browser.newContext()).newPage())
     await this.setViewportSize(this.width, this.height)
-    await this.go(this.url)
+    this.go(this.url)
     return this.page
   }
 

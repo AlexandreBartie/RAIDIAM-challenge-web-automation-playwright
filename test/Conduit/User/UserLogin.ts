@@ -3,6 +3,7 @@ import { DataFlowType, TestData } from '../../Framework/Design/TestData'
 import { WebTestScript } from '../../Framework/Script/WebTestScript'
 
 export class UserLoginData extends TestData {
+  name = 'Alexandre Silva'
   email = 'alexandre_bartie@hotmail.com'
   password = '1234567890'
   actions = 'SignIn'
@@ -18,15 +19,13 @@ export class UserLoginMapping extends SystemPage {
 
 export class UserLoginPage extends UserLoginMapping {
   async run(flow: UserLoginData, success: boolean): Promise<void> {
-    await this.SigninPage.click()
-    await this.pause(1)
+    await this.home.SigninPage.click()
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
     await this.Submit.click()
-    await this.pause(1)
 
     if (success) {
-      this.Assert(true)
+      this.home.ProfilePage.AssertHasText(flow.name)
     } else {
       this.Message.AssertHasText(flow.msg)
     }

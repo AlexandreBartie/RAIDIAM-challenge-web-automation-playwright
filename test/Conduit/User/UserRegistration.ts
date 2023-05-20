@@ -18,7 +18,7 @@ export class UserRegistrationMapping extends SystemPage {
 
 export class UserRegistrationPage extends UserRegistrationMapping {
   async run(flow: UserRegistrationData): Promise<void> {
-    await this.SigninPage.click()
+    await this.home.SigninPage.click()
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
     await this.Submit.click()

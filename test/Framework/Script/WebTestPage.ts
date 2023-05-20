@@ -1,21 +1,21 @@
 import { Locator } from 'playwright-core'
-import { SystemMapping } from '../../Conduit/SystemMapping'
 import { roleType } from './WebTestTypes'
 import { WebTestAssert } from './WebTestAssert'
 
 export class WebTestPage extends WebTestAssert {
-  public map = new SystemMapping(this)
-
   findByPlaceholder(title: string): Locator {
-    return this.page.getByPlaceholder(title)
+    const locator = this.page.getByPlaceholder(title)
+    return locator
   }
 
   findByRoleMatchName(role: roleType, name: string): Locator {
-    return this.page.getByRole(role, { name: name })
+    const locator = this.page.getByRole(role, { name: name })
+    return locator
   }
 
   findByRoleHasText(role: roleType, text: string): Locator {
-    return this.page.getByRole(role).filter({ hasText: text })
+    const locator = this.page.getByRole(role).filter({ hasText: text })
+    return locator
   }
 
   async pause(seconds = 1): Promise<void> {

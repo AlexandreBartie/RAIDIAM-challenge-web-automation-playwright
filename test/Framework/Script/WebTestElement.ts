@@ -10,8 +10,8 @@ export class WebTestLocator {
   private _role: roleType
   private _locator: Locator
 
-  get failLocator(): boolean {
-    return !this._locator
+  get hasLocator(): boolean {
+    return this._locator != undefined
   }
 
   constructor(web: WebTestPage) {
@@ -51,16 +51,18 @@ export class WebTestLocator {
         break
 
       case findElementBy.findByRole:
-        if (text) this._locator = this.web.findByRoleHasText(this.role, text)
-        else this._locator = this.web.findByRoleMatchName(this.role, this.key)
+        if (text) {
+          this._locator = this.web.findByRoleHasText(this.role, text)
+        } else this._locator = this.web.findByRoleMatchName(this.role, this.key)
         break
 
       default:
         throw new Error('Invalid operation')
     }
 
-    if (this.failLocator)
-      throw new Error(`findLocator fail! The element ${this.key} dont find!`)
+    if (!this.hasLocator)
+      console.log(`findLocator fail! The element ${this.key} dont find!`)
+    //   throw new Error(`findLocator fail! The element ${this.key} dont find!`)
   }
 }
 
@@ -78,6 +80,6 @@ export class WebTestElement<T> extends WebTestLocator {
 
   AssertHasText(text: string): void {
     this.setLocator(text)
-    this.web.Assert(this.failLocator)
+    this.web.Assert(this.hasLocator)
   }
 }

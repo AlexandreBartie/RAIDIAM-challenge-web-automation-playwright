@@ -1,6 +1,5 @@
 import { test } from '@playwright/test'
-
-import { SystemTest } from '../Conduit/SystemLevel'
+import { SystemTest } from '../Conduit/SystemTest'
 
 const e2e = new SystemTest()
 
