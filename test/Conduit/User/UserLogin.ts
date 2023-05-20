@@ -1,4 +1,4 @@
-import { SystemPage } from '../SystemPage'
+import { SystemMain } from '../SystemMain'
 import { DataFlowType, TestData } from '../../Framework/Design/TestData'
 import { WebTestScript } from '../../Framework/Script/WebTestScript'
 
@@ -10,7 +10,7 @@ export class UserLoginData extends TestData {
   msg = ''
 }
 
-export class UserLoginMapping extends SystemPage {
+export class UserLoginMapping extends SystemMain {
   public Email = this.map.SetTextBox('Email')
   public Password = this.map.SetTextBox('Password')
   public Submit = this.map.SetButton('Sign in')
@@ -18,11 +18,11 @@ export class UserLoginMapping extends SystemPage {
 }
 
 export class UserLoginPage extends UserLoginMapping {
-  async run(flow: UserLoginData, success: boolean): Promise<void> {
-    await this.home.SigninPage.click()
-    await this.Email.fill(flow.email)
-    await this.Password.fill(flow.password)
-    await this.Submit.click()
+  async run(flow: UserLoginData, success = true): Promise<void> {
+    this.home.SigninPage.click()
+    this.Email.fill(flow.email)
+    this.Password.fill(flow.password)
+    this.Submit.click()
 
     if (success) {
       this.home.ProfilePage.AssertHasText(flow.name)

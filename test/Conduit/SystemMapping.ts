@@ -1,11 +1,11 @@
 import { WebButton, WebLink, WebList, WebTextBox } from './SystemElement'
 
-import { SystemPage } from './SystemPage'
+import { SystemMain } from './SystemMain'
 
 export class SystemMapping {
-  private main: SystemPage
+  private main: SystemMain
 
-  constructor(main: SystemPage) {
+  constructor(main: SystemMain) {
     this.main = main
   }
   SetTextBox(title: string): WebTextBox {

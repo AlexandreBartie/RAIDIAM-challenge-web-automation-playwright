@@ -1,4 +1,4 @@
-import { SystemPage } from '../SystemPage'
+import { SystemMain } from '../SystemMain'
 import { DataFlowType, TestData } from '../../Framework/Design/TestData'
 import { WebTestScript } from '../../Framework/Script/WebTestScript'
 
@@ -10,7 +10,7 @@ export class UserRegistrationData extends TestData {
   msgs = ''
 }
 
-export class UserRegistrationMapping extends SystemPage {
+export class UserRegistrationMapping extends SystemMain {
   public Email = this.map.SetTextBox('Email')
   public Password = this.map.SetTextBox('Password')
   public Submit = this.map.SetButton('Sign in')

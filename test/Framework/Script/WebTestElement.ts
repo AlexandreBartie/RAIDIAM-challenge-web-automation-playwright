@@ -78,6 +78,11 @@ export class WebTestElement<T> extends WebTestLocator {
     return this as unknown as T
   }
 
+  AssertExist(text?: string): void {
+    this.setLocator(text)
+    this.web.Assert(this.hasLocator)
+  }
+
   AssertHasText(text: string): void {
     this.setLocator(text)
     this.web.Assert(this.hasLocator)
