@@ -78,6 +78,10 @@ export class WebTestElement<T> extends WebTestLocator {
     return this as unknown as T
   }
 
+  async pause(seconds?: number): Promise<void> {
+    await this.web.pause(seconds)
+  }
+
   AssertExist(text?: string): void {
     this.setLocator(text)
     this.web.Assert(this.hasLocator)

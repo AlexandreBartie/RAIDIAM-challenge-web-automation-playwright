@@ -1,4 +1,3 @@
-import { Browser, Page } from 'playwright-core'
 import { WebTestScope } from '../Framework/Perform/WebTestScope'
 import { UserLoginScript } from './User/UserLogin'
 import { WebTestTarget } from '../Framework/Perform/WebTestTarget'
@@ -15,9 +14,5 @@ export class SystemTest {
 
   constructor() {
     this.scope.Add('01', new UserLoginScript())
-  }
-
-  start(browser: Browser): Promise<Page> {
-    return this.main.start(browser)
   }
 }

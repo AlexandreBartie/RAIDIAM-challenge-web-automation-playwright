@@ -2,10 +2,17 @@ import { Page } from 'playwright-core'
 import { expect } from '@playwright/test'
 
 export class WebTestAssert {
-  public page: Page
+  private _pageControl: Page
 
-  SetPage(page: Page): void {
-    this.page = page
+  get pageControl(): Page {
+    if (!this._pageControl) {
+      console.log('PageControl is Null')
+    }
+    return this._pageControl
+  }
+
+  SetPage(pageControl: Page): void {
+    this._pageControl = pageControl
   }
 
   Assert(success: boolean): void {

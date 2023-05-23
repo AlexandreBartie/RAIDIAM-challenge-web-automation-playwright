@@ -6,13 +6,13 @@ import { DataFlowType, TestData } from '../Design/TestData'
 export type IWebTestScript = WebTestScript<WebTestPage, TestData>
 export abstract class WebTestScript<P extends WebTestPage, D extends TestData> {
   name: string
-  local: P
+  page: P
   data: D
 
   testCases = new TestCases()
 
   setup(page: Page): void {
-    this.local.SetPage(page)
+    this.page.SetPage(page)
   }
 
   getMerge(flow: DataFlowType): D {
