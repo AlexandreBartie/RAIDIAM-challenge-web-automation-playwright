@@ -49,10 +49,10 @@ export class UserLoginScript extends WebTestScript<
 
   private createTestCases(): void {
     this.addTestCaseOk('Should login using valid input data', {})
-    // this.addTestCaseNo('Should check email not found', {
-    //   email: 'bartie_bartie@hotmail.com',
-    //   msg: 'email or password is invalid',
-    // })
+    this.addTestCaseNo('Should check email not found', {
+      email: 'bartie_bartie@hotmail.com',
+      msg: 'email or password is invalid',
+    })
     // this.addTestCaseNo('Should check password not match', {
     //   password: '0987654321',
     //   msg: 'email or password is invalid',
