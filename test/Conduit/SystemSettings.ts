@@ -1,9 +1,6 @@
 import { WebTestBrowser } from '../Framework/Perform/WebTestBrowser'
-import { SystemPage } from './SystemPage'
 
-export class SystemMain extends WebTestBrowser {
-  public readonly page = new SystemPage()
-
+export class SystemSettings extends WebTestBrowser {
   // link to start the Conduit Web Application
   url = 'http://localhost:8080/#/'
 

@@ -33,6 +33,10 @@
     {
       "filePath": "test\\e2e\\demo\\runTestScript.spec.ts",
       "group": "Default"
+    },
+    {
+      "filePath": "test\\Conduit",
+      "group": "Default"
     }
   ],
 }

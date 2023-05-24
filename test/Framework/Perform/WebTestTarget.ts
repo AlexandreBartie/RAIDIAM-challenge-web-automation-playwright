@@ -1,5 +1,6 @@
-import { TestCases } from '../Design/TestCase'
-import { DataFlowType } from '../Design/TestData'
+import { TestCases } from '../Model/TestCase'
+import { IDataFlowType } from '../Model/TestData'
+import { TestScenarios } from '../Model/TestScenario'
 import { IWebTestScript } from '../Script/WebTestScript'
 
 export type WebTestTargetList = Array<WebTestTarget>
@@ -12,11 +13,15 @@ export class WebTestTarget {
     return `${this.order}.${this.script.name}`
   }
 
-  get testCases(): TestCases {
-    return this.script.testCases
+  get scenarios(): TestScenarios {
+    return this.script.scenarios
   }
 
-  async run(flow: DataFlowType, success: boolean): Promise<void> {
+  get tests(): TestCases {
+    return this.scenarios.getTests()
+  }
+
+  async run(flow: IDataFlowType, success: boolean): Promise<void> {
     return await this.script.run(flow, success)
   }
 

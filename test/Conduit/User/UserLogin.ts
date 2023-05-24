@@ -1,4 +1,4 @@
-import { DataFlowType, TestData } from '../../Framework/Design/TestData'
+import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
 import { WebTestScript } from '../../Framework/Script/WebTestScript'
 import { SystemPage } from '../SystemPage'
 
@@ -19,15 +19,13 @@ export class UserLoginMapping extends SystemPage {
 
 export class UserLoginPage extends UserLoginMapping {
   async run(flow: UserLoginData, success = true): Promise<void> {
-    await this.pause()
-    await this.SigninPage.click()
-    await this.pause()
+    await this.home.SigninPage.click()
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
     await this.Submit.click()
 
     if (success) {
-      this.ProfilePage.AssertHasText(flow.name)
+      this.home.ProfilePage.AssertHasText(flow.name)
     } else {
       this.Message.AssertHasText(flow.msg)
     }
@@ -48,15 +46,23 @@ export class UserLoginScript extends WebTestScript<
   }
 
   private createTestCases(): void {
-    this.addTestCaseOk('Should login using valid input data', {})
-    this.addTestCaseNo('Should check email not found', {
-      email: 'bartie_bartie@hotmail.com',
-      msg: 'email or password is invalid',
-    })
-    // this.addTestCaseNo('Should check password not match', {
-    //   password: '0987654321',
-    //   msg: 'email or password is invalid',
-    // })
+    this.addTestDefault('Should login using valid data')
+    this.addScenario('Should check input incorret data')
+    {
+      this.addTestCaseNo('email is invalid', {
+        email: 'alexandre_bartie',
+        msg: 'email or password is invalid',
+      })
+      this.addTestCaseNo('email not exist', {
+        email: 'bartie_bartie@hotmail.com',
+        msg: 'email or password is invalid',
+      })
+      this.addTestCaseNo('password not match', {
+        password: '0987654321',
+        msg: 'email or password is invalid',
+      })
+    }
+
     // this.addTestCaseNo('Should check email is blank', {
     //   email: '',
     //   msg: `'email can't be blank'`,
@@ -67,7 +73,7 @@ export class UserLoginScript extends WebTestScript<
     // })
   }
 
-  async run(flow: DataFlowType, sucess: boolean): Promise<void> {
+  async run(flow: IDataFlowType, sucess: boolean): Promise<void> {
     await this.page.run(this.getMerge(flow), sucess)
   }
 }

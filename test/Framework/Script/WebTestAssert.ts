@@ -11,8 +11,9 @@ export class WebTestAssert {
     return this._pageControl
   }
 
-  SetPage(pageControl: Page): void {
+  SetPage(pageControl: Page): Page {
     this._pageControl = pageControl
+    return pageControl
   }
 
   Assert(success: boolean): void {

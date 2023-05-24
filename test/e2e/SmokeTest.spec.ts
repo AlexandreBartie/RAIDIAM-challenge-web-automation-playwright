@@ -4,15 +4,15 @@ import { SystemTest } from '../Conduit/SystemTest'
 const e2e = new SystemTest()
 
 test.describe('Smoke Testing', () => {
-  test.beforeAll(async ({ page }) => {
-    await e2e.startPage(page)
+  test.beforeAll(async ({ browser }) => {
+    await e2e.start(browser)
   })
 
   test('Login', async () => {
-    await e2e.home.actions.Login()
+    await e2e.page.home.actions.Login()
   })
 
-  /*   test.skip('Logout', async () => {
-    await e2e.main.home.actions.Logout()
-  }) */
+  // test('Logout', async () => {
+  //   await e2e.page.home.actions.Logout()
+  // })
 })

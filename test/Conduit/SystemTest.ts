@@ -1,10 +1,15 @@
+import { Browser, Page } from 'playwright-core'
+
 import { WebTestScope } from '../Framework/Perform/WebTestScope'
 import { UserLoginScript } from './User/UserLogin'
 import { WebTestTarget } from '../Framework/Perform/WebTestTarget'
-import { SystemMain } from './SystemMain'
+import { SystemSettings } from './SystemSettings'
+import { SystemPage } from './SystemPage'
 
 export class SystemTest {
-  public readonly main = new SystemMain()
+  public readonly page = new SystemPage()
+
+  public readonly settings = new SystemSettings()
 
   private scope = new WebTestScope()
 
@@ -14,5 +19,9 @@ export class SystemTest {
 
   constructor() {
     this.scope.Add('01', new UserLoginScript())
+  }
+
+  async start(browser: Browser): Promise<Page> {
+    return this.page.SetPage(await this.settings.start(browser))
   }
 }

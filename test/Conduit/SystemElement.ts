@@ -1,7 +1,8 @@
 import { WebTestElement } from '../Framework/Script/WebTestElement'
 
 export class WebClickable extends WebTestElement<WebClickable> {
-  async click(): Promise<void> {
+  async click(text?: string): Promise<void> {
+    if (text) this.setLocator(text)
     await this.pause()
     await this.locator.click()
     await this.pause()
