@@ -4,17 +4,17 @@ import { WebTestAssert } from './WebTestAssert'
 
 export class WebTestPage extends WebTestAssert {
   findByPlaceholder(title: string): Locator {
-    const locator = this.pageControl.getByPlaceholder(title)
+    const locator = this.driver.getByPlaceholder(title)
     return locator
   }
 
   findByRoleMatchName(role: roleType, name: string): Locator {
-    const locator = this.pageControl.getByRole(role, { name: name })
+    const locator = this.driver.getByRole(role, { name: name })
     return locator
   }
 
   findByRoleHasText(role: roleType, text: string): Locator {
-    const locator = this.pageControl.getByRole(role).filter({ hasText: text })
+    const locator = this.driver.getByRole(role).filter({ hasText: text })
     return locator
   }
 

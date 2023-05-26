@@ -1,64 +1,49 @@
-// import { TestData } from '../../Framework/Model/TestData'
-// import { SystemPage } from '../SystemPage'
+import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
+import { SystemHome } from '../SystemHome'
+import { SystemConnect } from '../SystemPage'
+import { SystemScript } from '../SystemScript'
 
-// export class UserLogoutData extends TestData {
-//   name = 'Alexandre Silva'
-// }
+export class UserLogoutData extends TestData {
+  name = 'Alexandre Silva'
+  email = 'alexandre_bartie@hotmail.com'
+  password = '1234567890'
+  actions = 'SignIn'
+  msg = ''
+}
 
-// export class UserLogoutMapping extends SystemPage {
-//   public Submit = this.map.SetButton('Or click here to logout.')
-// }
+export class UserLogoutMapping extends SystemConnect {
+  public Submit = this.SetButton('Or click here to logout.')
+}
 
-// export class UserLogoutPage extends UserLogoutMapping {
-//   async run(flow: UserLogoutData): Promise<void> {
-//     await this.home.UserPage.click(flow.name)
-//     await this.home.ProfilePage.click()
-//     await this.Submit.click()
-//   }
-// }
+export class UserLogoutPage extends UserLogoutMapping {
+  async run(flow: UserLogoutData, success = true): Promise<void> {
+    await this.home.UserPageLink.click(flow.name)
+    await this.home.SettingsLink.click()
+    await this.Submit.click()
+    this.Assert(success)
+  }
+}
 
-// export class UserLogoutScript extends WebTestScript<
-//   UserLogoutPage,
-//   UserLogoutData
-// > {
-//   name = 'User Logout'
-//   constructor() {
-//     super()
-//     this.page = new UserLogoutPage()
-//     this.data = new UserLogoutData()
+export class UserLogoutScript extends SystemScript<
+  UserLogoutPage,
+  UserLogoutData
+> {
+  name = 'User Logout'
+  constructor(home: SystemHome) {
+    super(home)
+    this.page = new UserLogoutPage()
+    this.data = new UserLogoutData()
 
-//     this.createTestCases()
-//   }
+    this.page.SetHome(home)
 
-//   private createTestCases(): void {
-//     this.addTestDefault('Should login using valid data')
-//     this.addScenario('Should check input incorret data')
-//     {
-//       this.addTestCaseNo('email is invalid', {
-//         email: 'alexandre_bartie',
-//         msg: 'email or password is invalid',
-//       })
-//       this.addTestCaseNo('email not exist', {
-//         email: 'bartie_bartie@hotmail.com',
-//         msg: 'email or password is invalid',
-//       })
-//       this.addTestCaseNo('password not match', {
-//         password: '0987654321',
-//         msg: 'email or password is invalid',
-//       })
-//     }
+    this.createTestCases()
+  }
 
-//     // this.addTestCaseNo('Should check email is blank', {
-//     //   email: '',
-//     //   msg: `'email can't be blank'`,
-//     // })
-//     // this.addTestCaseNo('Should check password is blank', {
-//     //   password: '',
-//     //   msg: `'password can't be blank'`,
-//     // })
-//   }
+  private createTestCases(): void {
+    this.addTestDefault('Should logout using valid data')
+  }
 
-//   async run(flow: IDataFlowType, sucess: boolean): Promise<void> {
-//     await this.page.run(this.getMerge(flow), sucess)
-//   }
-// }
+  async run(flow: IDataFlowType, sucess: boolean): Promise<void> {
+    await this.page.run(this.getMerge(flow), sucess)
+  }
+}

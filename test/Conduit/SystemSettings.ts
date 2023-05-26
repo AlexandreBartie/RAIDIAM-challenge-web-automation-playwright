@@ -1,4 +1,4 @@
-import { WebTestBrowser } from '../Framework/Perform/WebTestBrowser'
+import { WebTestBrowser } from '../Framework/Script/WebTestBrowser'
 
 export class SystemSettings extends WebTestBrowser {
   // link to start the Conduit Web Application

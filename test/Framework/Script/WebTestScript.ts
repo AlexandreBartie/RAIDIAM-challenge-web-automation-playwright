@@ -22,7 +22,7 @@ export abstract class WebTestScript<P extends WebTestPage, D extends TestData> {
   }
 
   setup(page: Page): void {
-    this.page.SetPage(page)
+    this.page.SetDriver(page)
   }
 
   getMerge(flow: IDataFlowType): D {

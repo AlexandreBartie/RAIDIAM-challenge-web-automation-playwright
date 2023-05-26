@@ -3,9 +3,14 @@ import { WebTestElement } from '../Framework/Script/WebTestElement'
 export class WebClickable extends WebTestElement<WebClickable> {
   async click(text?: string): Promise<void> {
     if (text) this.setLocator(text)
-    await this.pause()
-    await this.locator.click()
-    await this.pause()
+
+    if (this.hasLocator) {
+      await this.pause()
+      await this.locator.click()
+      await this.pause()
+    } else {
+      throw new Error(`WebClickable fail! The element '${this.tag}' dont find!`)
+    }
   }
 }
 

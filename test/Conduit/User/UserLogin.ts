@@ -1,6 +1,7 @@
 import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
-import { WebTestScript } from '../../Framework/Script/WebTestScript'
-import { SystemPage } from '../SystemPage'
+import { SystemHome } from '../SystemHome'
+import { SystemConnect } from '../SystemPage'
+import { SystemScript } from '../SystemScript'
 
 export class UserLoginData extends TestData {
   name = 'Alexandre Silva'
@@ -10,37 +11,49 @@ export class UserLoginData extends TestData {
   msg = ''
 }
 
-export class UserLoginMapping extends SystemPage {
-  public Email = this.map.SetTextBox('Email')
-  public Password = this.map.SetTextBox('Password')
-  public Submit = this.map.SetButton('Sign in')
-  public Message = this.map.SetList()
+export class UserLoginMapping extends SystemConnect {
+  public Email = this.SetTextBox('Email')
+  public Password = this.SetTextBox('Password')
+  public Submit = this.SetButton('Sign in')
+  public Message = this.SetList()
 }
 
 export class UserLoginPage extends UserLoginMapping {
   async run(flow: UserLoginData, success = true): Promise<void> {
-    await this.home.SigninPage.click()
+    if (this.home.failDriver) {
+      console.log('Error#1')
+    } else {
+      console.log('Error#2')
+    }
+
+    await this.home.SigninLink.click()
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
     await this.Submit.click()
 
     if (success) {
-      this.home.ProfilePage.AssertHasText(flow.name)
+      this.Assert(await this.home.HomeLink.isVisible())
+      this.Assert(await this.home.NewArticleLink.isVisible())
+      this.Assert(await this.home.SettingsLink.isVisible())
+      this.Assert(await this.home.ProfileLink.isVisible(flow.name))
+      this.home.HomeLink.click()
     } else {
-      this.Message.AssertHasText(flow.msg)
+      this.Assert(this.Message.hasText(flow.msg))
     }
   }
 }
 
-export class UserLoginScript extends WebTestScript<
+export class UserLoginScript extends SystemScript<
   UserLoginPage,
   UserLoginData
 > {
   name = 'User Login'
-  constructor() {
-    super()
+  constructor(home: SystemHome) {
+    super(home)
     this.page = new UserLoginPage()
     this.data = new UserLoginData()
+
+    this.page.SetHome(home)
 
     this.createTestCases()
   }
@@ -62,15 +75,17 @@ export class UserLoginScript extends WebTestScript<
         msg: 'email or password is invalid',
       })
     }
-
-    // this.addTestCaseNo('Should check email is blank', {
-    //   email: '',
-    //   msg: `'email can't be blank'`,
-    // })
-    // this.addTestCaseNo('Should check password is blank', {
-    //   password: '',
-    //   msg: `'password can't be blank'`,
-    // })
+    this.addScenario('Should check input blank data')
+    {
+      this.addTestCaseNo('email is blank', {
+        email: '',
+        msg: `'email can't be blank'`,
+      })
+      this.addTestCaseNo('password is blank', {
+        password: '',
+        msg: `'password can't be blank'`,
+      })
+    }
   }
 
   async run(flow: IDataFlowType, sucess: boolean): Promise<void> {

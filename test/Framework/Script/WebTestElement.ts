@@ -5,13 +5,15 @@ import { findElementBy, roleType } from './WebTestTypes'
 export class WebTestLocator {
   readonly web: WebTestPage
 
-  private _key: string
+  private _tag: string
   private _findby: findElementBy = findElementBy.findByRole
   private _role: roleType
   private _locator: Locator
 
+  private _key: string
+
   get hasLocator(): boolean {
-    return this._locator != undefined
+    return this.locator != undefined
   }
 
   constructor(web: WebTestPage) {
@@ -20,6 +22,9 @@ export class WebTestLocator {
   // Getter
   public get key(): string {
     return this._key
+  }
+  public get tag(): string {
+    return this._tag
   }
   public get findby(): findElementBy {
     return this._findby
@@ -38,6 +43,9 @@ export class WebTestLocator {
   public setKey(key: string): void {
     this._key = key
   }
+  public setTitle(title: string): void {
+    this._tag = title
+  }
   public setFindby(findby: findElementBy): void {
     this._findby = findby
   }
@@ -47,48 +55,51 @@ export class WebTestLocator {
   public setLocator(text?: string): void {
     switch (this.findby) {
       case findElementBy.findByTitle:
-        this._locator = this.web.findByPlaceholder(this.key)
+        this.setKey(this.tag)
+        this._locator = this.web.findByPlaceholder(this.tag)
         break
 
       case findElementBy.findByRole:
         if (text) {
+          this.setKey(text)
           this._locator = this.web.findByRoleHasText(this.role, text)
-        } else this._locator = this.web.findByRoleMatchName(this.role, this.key)
+        } else {
+          this.setKey(this.tag)
+          this._locator = this.web.findByRoleMatchName(this.role, this.tag)
+        }
         break
 
       default:
         throw new Error('Invalid operation')
     }
-
-    if (!this.hasLocator)
-      console.log(`findLocator fail! The element ${this.key} dont find!`)
-    //   throw new Error(`findLocator fail! The element ${this.key} dont find!`)
   }
 }
 
-export class WebTestElement<T> extends WebTestLocator {
+export class WebTestAtributes extends WebTestLocator {
+  async isVisible(text?: string): Promise<boolean> {
+    if (text) this.setLocator(text)
+    return await this.locator.isVisible()
+  }
+
+  hasText(text: string): boolean {
+    this.setLocator(text)
+    return this.hasLocator
+  }
+}
+
+export class WebTestElement<T> extends WebTestAtributes {
   setupByTitle(title: string): T {
-    this.setKey(title)
+    this.setTitle(title)
     this.setFindby(findElementBy.findByTitle)
     return this as unknown as T
   }
   setupByRole(role: roleType, title?: string): T {
     this.setRole(role)
-    if (title) this.setKey(title)
+    if (title) this.setTitle(title)
     return this as unknown as T
   }
 
   async pause(seconds?: number): Promise<void> {
     await this.web.pause(seconds)
-  }
-
-  AssertExist(text?: string): void {
-    this.setLocator(text)
-    this.web.Assert(this.hasLocator)
-  }
-
-  AssertHasText(text: string): void {
-    this.setLocator(text)
-    this.web.Assert(this.hasLocator)
   }
 }

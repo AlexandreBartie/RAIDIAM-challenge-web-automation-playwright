@@ -5,14 +5,14 @@ const e2e = new SystemTest()
 
 test.describe('Smoke Testing', () => {
   test.beforeAll(async ({ browser }) => {
-    await e2e.start(browser)
+    await e2e.home.start(browser)
   })
 
   test('Login', async () => {
-    await e2e.page.home.actions.Login()
+    await e2e.home.actions.Login()
   })
 
-  // test('Logout', async () => {
-  //   await e2e.page.home.actions.Logout()
-  // })
+  test('Logout', async () => {
+    await e2e.home.actions.Logout()
+  })
 })

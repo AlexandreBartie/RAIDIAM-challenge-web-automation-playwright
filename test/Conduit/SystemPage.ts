@@ -1,55 +1,29 @@
+import { SystemHome } from './SystemHome'
 import { WebTestPage } from '../Framework/Script/WebTestPage'
-import { WebLink } from './SystemElement'
-import { SystemMapping } from './SystemMapping'
-import { UserLoginPage, UserLoginData } from './User/UserLogin'
+import { WebButton, WebLink, WebList, WebTextBox } from './SystemElement'
 
 export class SystemPage extends WebTestPage {
-  public readonly map = new SystemMapping(this)
-  public readonly home = new SystemHome(this)
-}
+  public SetTextBox(title: string): WebTextBox {
+    return new WebTextBox(this).setupByTitle(title)
+  }
 
-export class SystemHome {
-  public readonly page: SystemPage
+  public SetButton(title: string): WebButton {
+    return new WebButton(this).setupByRole('button', title)
+  }
 
-  public HomePage: WebLink
-  public SigninPage: WebLink
-  public SignupPage: WebLink
+  public SetLink(title?: string): WebLink {
+    return new WebLink(this).setupByRole('link', title)
+  }
 
-  public NewArticlePage: WebLink
-  public SettingsPage: WebLink
-  public UserPage: WebLink
-  public ProfilePage: WebLink
-
-  public readonly actions = new SystemActions(this)
-
-  constructor(page: SystemPage) {
-    this.page = page
-    this.HomePage = page.map.SetLink('Home')
-    this.SigninPage = page.map.SetLink(' Sign in')
-    this.SignupPage = page.map.SetLink(' Sign up')
-
-    this.NewArticlePage = page.map.SetLink(' New Article')
-    this.SettingsPage = page.map.SetLink(' Settings')
-    this.UserPage = page.map.SetLink()
-    this.ProfilePage = page.map.SetLink(' Edit Profile Settings')
+  public SetList(): WebList {
+    return new WebList(this).setupByRole('list')
   }
 }
 
-export class SystemActions {
-  private home: SystemHome
-
-  constructor(home: SystemHome) {
+export class SystemConnect extends SystemPage {
+  public home: SystemHome
+  SetHome(home: SystemHome): void {
     this.home = home
+    this.SetDriver(this.home.driver)
   }
-  async Login(): Promise<void> {
-    const login = new UserLoginPage()
-    login.SetPage(this.home.page.pageControl)
-    await login.run(new UserLoginData())
-  }
-
-  // async Logout(): Promise<void> {
-  //   const logout = new UserLogoutPage()
-  //   logout.SetPage(this.home.page.pageControl)
-  //   await logout.run(new UserLogoutData())
-  // }
 }
