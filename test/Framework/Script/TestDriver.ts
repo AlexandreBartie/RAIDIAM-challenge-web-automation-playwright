@@ -1,4 +1,5 @@
 import { Page } from 'playwright-core'
+import { expect } from '@playwright/test'
 
 export class WebTestDriver {
   private _driver: Page
@@ -18,5 +19,8 @@ export class WebTestDriver {
   SetDriver(driver: Page): Page {
     this._driver = driver
     return driver
+  }
+  Assert(success: boolean, msg?: string): void {
+    expect(success, `${msg}`).toBeTruthy()
   }
 }

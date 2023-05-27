@@ -20,23 +20,13 @@ export class UserLoginMapping extends SystemConnect {
 
 export class UserLoginPage extends UserLoginMapping {
   async run(flow: UserLoginData, success = true): Promise<void> {
-    if (this.home.failDriver) {
-      console.log('Error#1')
-    } else {
-      console.log('Error#2')
-    }
-
     await this.home.SigninLink.click()
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
     await this.Submit.click()
 
     if (success) {
-      this.Assert(await this.home.HomeLink.isVisible())
-      this.Assert(await this.home.NewArticleLink.isVisible())
-      this.Assert(await this.home.SettingsLink.isVisible())
-      this.Assert(await this.home.ProfileLink.isVisible(flow.name))
-      this.home.HomeLink.click()
+      this.home.AssertLogin(flow.name)
     } else {
       this.Assert(this.Message.hasText(flow.msg))
     }
@@ -49,7 +39,7 @@ export class UserLoginScript extends SystemScript<
 > {
   name = 'User Login'
   constructor(home: SystemHome) {
-    super(home)
+    super()
     this.page = new UserLoginPage()
     this.data = new UserLoginData()
 

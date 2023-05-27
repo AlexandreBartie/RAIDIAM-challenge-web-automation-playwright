@@ -1,15 +1,15 @@
 import { TestData } from '../Framework/Model/TestData'
-import { WebTestPage } from '../Framework/Script/WebTestPage'
-import { WebTestScript } from '../Framework/Script/WebTestScript'
-import { SystemHome } from './SystemHome'
+import { TestPage } from '../Framework/Script/TestPage'
+import { TestScript } from '../Framework/Script/TestScript'
+// import { SystemHome } from './SystemHome'
 
 export abstract class SystemScript<
-  P extends WebTestPage,
+  P extends TestPage,
   D extends TestData,
-> extends WebTestScript<P, D> {
-  public home: SystemHome
-  constructor(home: SystemHome) {
-    super()
-    this.home = home
-  }
+> extends TestScript<P, D> {
+  // private home: SystemHome
+  // constructor(home: SystemHome) {
+  //   super()
+  //   this.home = home
+  // }
 }

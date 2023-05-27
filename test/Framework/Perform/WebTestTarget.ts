@@ -1,7 +1,7 @@
 import { TestCases } from '../Model/TestCase'
 import { IDataFlowType } from '../Model/TestData'
 import { TestScenarios } from '../Model/TestScenario'
-import { IWebTestScript } from '../Script/WebTestScript'
+import { IWebTestScript } from '../Script/TestScript'
 
 export type WebTestTargetList = Array<WebTestTarget>
 

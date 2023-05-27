@@ -1,8 +1,8 @@
 import { Locator } from 'playwright-core'
-import { roleType } from './WebTestTypes'
-import { WebTestAssert } from './WebTestAssert'
+import { roleType } from './TestTypes'
+import { WebTestDriver } from './TestDriver'
 
-export class WebTestPage extends WebTestAssert {
+export class TestPage extends WebTestDriver {
   findByPlaceholder(title: string): Locator {
     const locator = this.driver.getByPlaceholder(title)
     return locator

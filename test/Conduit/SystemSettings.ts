@@ -1,6 +1,6 @@
-import { WebTestBrowser } from '../Framework/Script/WebTestBrowser'
+import { TestBrowser } from '../Framework/Script/TestBrowser'
 
-export class SystemSettings extends WebTestBrowser {
+export class SystemSettings extends TestBrowser {
   // link to start the Conduit Web Application
   url = 'http://localhost:8080/#/'
 

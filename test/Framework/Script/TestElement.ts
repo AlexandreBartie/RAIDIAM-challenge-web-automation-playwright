@@ -1,9 +1,9 @@
 import { Locator } from 'playwright-core'
-import { WebTestPage } from './WebTestPage'
-import { findElementBy, roleType } from './WebTestTypes'
+import { TestPage } from './TestPage'
+import { findElementBy, roleType } from './TestTypes'
 
-export class WebTestLocator {
-  readonly web: WebTestPage
+export class TestLocator {
+  readonly web: TestPage
 
   private _tag: string
   private _findby: findElementBy = findElementBy.findByRole
@@ -16,7 +16,7 @@ export class WebTestLocator {
     return this.locator != undefined
   }
 
-  constructor(web: WebTestPage) {
+  constructor(web: TestPage) {
     this.web = web
   }
   // Getter
@@ -75,10 +75,15 @@ export class WebTestLocator {
   }
 }
 
-export class WebTestAtributes extends WebTestLocator {
+export class TestAtributes extends TestLocator {
+  isExist(text?: string): boolean {
+    if (text) this.setLocator(text)
+    return this.hasLocator
+  }
+
   async isVisible(text?: string): Promise<boolean> {
     if (text) this.setLocator(text)
-    return await this.locator.isVisible()
+    return this.locator.isVisible()
   }
 
   hasText(text: string): boolean {
@@ -87,7 +92,33 @@ export class WebTestAtributes extends WebTestLocator {
   }
 }
 
-export class WebTestElement<T> extends WebTestAtributes {
+export class TestAsserts extends TestAtributes {
+  AssertExist(text?: string): void {
+    this.web.Assert(this.isExist(text), `${this.key} not exist!`)
+  }
+
+  async AssertIsVisible(text?: string): Promise<void> {
+    this.AssertExist(text)
+
+    const isVisible = await this.isVisible(text)
+
+    if (isVisible) {
+      console.log('Ok!')
+    }
+
+    if (!isVisible) {
+      console.log('Problems!')
+    }
+
+    this.web.Assert(await this.isVisible(text), `${this.key} not visible!`)
+  }
+
+  AssertHasText(text: string): void {
+    this.AssertExist(text)
+    this.web.Assert(this.hasText(text), `${this.key} not have ${text} text!`)
+  }
+}
+export class TestElement<T> extends TestAsserts {
   setupByTitle(title: string): T {
     this.setTitle(title)
     this.setFindby(findElementBy.findByTitle)

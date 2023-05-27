@@ -1,6 +1,6 @@
-import { WebTestElement } from '../Framework/Script/WebTestElement'
+import { TestElement } from '../Framework/Script/TestElement'
 
-export class WebClickable extends WebTestElement<WebClickable> {
+export class WebClickable extends TestElement<WebClickable> {
   async click(text?: string): Promise<void> {
     if (text) this.setLocator(text)
 
@@ -14,7 +14,7 @@ export class WebClickable extends WebTestElement<WebClickable> {
   }
 }
 
-export class WebTextBox extends WebTestElement<WebTextBox> {
+export class WebTextBox extends TestElement<WebTextBox> {
   async fill(text: string): Promise<void> {
     await this.locator.fill(text)
   }

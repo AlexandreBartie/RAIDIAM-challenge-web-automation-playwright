@@ -1,12 +1,12 @@
 import { Page } from 'playwright-core'
-import { WebTestPage } from './WebTestPage'
+import { TestPage } from './TestPage'
 import { TestSuite } from '../Model/TestSuite'
 import { IDataFlowType, TestData } from '../Model/TestData'
 import { TestScenarios } from '../Model/TestScenario'
 import { TestCases } from '../Model/TestCase'
 
-export type IWebTestScript = WebTestScript<WebTestPage, TestData>
-export abstract class WebTestScript<P extends WebTestPage, D extends TestData> {
+export type ITestScript = TestScript<TestPage, TestData>
+export abstract class TestScript<P extends TestPage, D extends TestData> {
   name: string
   page: P
   data: D

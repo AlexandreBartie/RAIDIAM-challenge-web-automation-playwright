@@ -1,4 +1,4 @@
-import { IWebTestScript } from '../Script/WebTestScript'
+import { IWebTestScript } from '../Script/TestScript'
 import { WebTestTarget, WebTestTargetList } from './WebTestTarget'
 
 export class WebTestScope {

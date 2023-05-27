@@ -1,10 +1,10 @@
 import { Browser, Page } from 'playwright-core'
-import { WebTestPage } from './WebTestPage'
+import { TestPage } from './TestPage'
 
-export class WebTestBrowser {
+export class TestBrowser {
   public url: string
 
-  public page = new WebTestPage()
+  public page = new TestPage()
 
   width: number
   height: number

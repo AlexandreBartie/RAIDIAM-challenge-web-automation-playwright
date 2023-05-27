@@ -16,11 +16,11 @@ export class UserLogoutMapping extends SystemConnect {
 }
 
 export class UserLogoutPage extends UserLogoutMapping {
-  async run(flow: UserLogoutData, success = true): Promise<void> {
-    await this.home.UserPageLink.click(flow.name)
+  async run(flow: UserLogoutData, success = true): Promise<boolean> {
+    await this.home.AssertLogin(flow.name)
     await this.home.SettingsLink.click()
     await this.Submit.click()
-    this.Assert(success)
+    return success
   }
 }
 
@@ -30,7 +30,7 @@ export class UserLogoutScript extends SystemScript<
 > {
   name = 'User Logout'
   constructor(home: SystemHome) {
-    super(home)
+    super()
     this.page = new UserLogoutPage()
     this.data = new UserLogoutData()
 

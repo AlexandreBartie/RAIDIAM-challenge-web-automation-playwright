@@ -1,8 +1,8 @@
 import { SystemHome } from './SystemHome'
-import { WebTestPage } from '../Framework/Script/WebTestPage'
+import { TestPage } from '../Framework/Script/TestPage'
 import { WebButton, WebLink, WebList, WebTextBox } from './SystemElement'
 
-export class SystemPage extends WebTestPage {
+export class SystemPage extends TestPage {
   public SetTextBox(title: string): WebTextBox {
     return new WebTextBox(this).setupByTitle(title)
   }
@@ -26,4 +26,7 @@ export class SystemConnect extends SystemPage {
     this.home = home
     this.SetDriver(this.home.driver)
   }
+
+  // login.SetHome(this.home)
+  // return await login.run(new UserLoginData())
 }

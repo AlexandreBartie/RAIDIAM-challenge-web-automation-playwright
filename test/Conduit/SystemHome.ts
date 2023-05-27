@@ -6,13 +6,13 @@ import { UserLogoutPage, UserLogoutData } from './User/UserLogout'
 
 export class SystemHome extends SystemPage {
   public HomeLink = this.SetLink('Home')
-  public SigninLink = this.SetLink(' Sign in')
-  public SignupLink = this.SetLink(' Sign up')
+  public SigninLink = this.SetLink('Sign in')
+  public SignupLink = this.SetLink('Sign up')
 
-  public NewArticleLink = this.SetLink(' New Article')
-  public SettingsLink = this.SetLink(' Settings')
+  public NewArticleLink = this.SetLink('New Article')
+  public SettingsLink = this.SetLink('Settings')
   public UserPageLink = this.SetLink()
-  public ProfileLink = this.SetLink(' Edit Profile Settings')
+  public ProfileLink = this.SetLink('Edit Profile Settings')
 
   public readonly settings = new SystemSettings()
 
@@ -20,6 +20,17 @@ export class SystemHome extends SystemPage {
 
   async start(browser: Browser): Promise<Page> {
     return this.SetDriver(await this.settings.start(browser))
+  }
+  async AssertLogin(userName: string): Promise<boolean> {
+    try {
+      this.HomeLink.AssertExist()
+      this.NewArticleLink.AssertExist()
+      this.SettingsLink.AssertExist()
+      this.ProfileLink.AssertExist(userName)
+      return true
+    } catch {
+      return false
+    }
   }
 }
 
