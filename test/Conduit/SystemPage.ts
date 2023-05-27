@@ -2,7 +2,7 @@ import { SystemHome } from './SystemHome'
 import { TestPage } from '../Framework/Script/TestPage'
 import { WebButton, WebLink, WebList, WebTextBox } from './SystemElement'
 
-export class SystemPage extends TestPage {
+export class SystemConnect extends TestPage {
   public SetTextBox(title: string): WebTextBox {
     return new WebTextBox(this).setupByTitle(title)
   }
@@ -20,13 +20,10 @@ export class SystemPage extends TestPage {
   }
 }
 
-export class SystemConnect extends SystemPage {
+export class SystemPage extends SystemConnect {
   public home: SystemHome
   SetHome(home: SystemHome): void {
     this.home = home
     this.SetDriver(this.home.driver)
   }
-
-  // login.SetHome(this.home)
-  // return await login.run(new UserLoginData())
 }

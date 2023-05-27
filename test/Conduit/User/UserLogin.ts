@@ -1,7 +1,7 @@
 import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
 import { TestScript } from '../../Framework/Script/TestScript'
 import { SystemHome } from '../SystemHome'
-import { SystemConnect } from '../SystemPage'
+import { SystemPage } from '../SystemPage'
 
 export class UserLoginData extends TestData {
   name = 'Alexandre Silva'
@@ -11,14 +11,12 @@ export class UserLoginData extends TestData {
   msg = ''
 }
 
-export class UserLoginMapping extends SystemConnect {
+export class UserLoginPage extends SystemPage {
   public Email = this.SetTextBox('Email')
   public Password = this.SetTextBox('Password')
   public Submit = this.SetButton('Sign in')
   public Message = this.SetList()
-}
 
-export class UserLoginPage extends UserLoginMapping {
   async run(flow: UserLoginData, success = true): Promise<void> {
     await this.home.SigninLink.click()
     await this.Email.fill(flow.email)

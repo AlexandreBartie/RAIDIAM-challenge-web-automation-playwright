@@ -1,7 +1,7 @@
 import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
 import { TestScript } from '../../Framework/Script/TestScript'
 import { SystemHome } from '../SystemHome'
-import { SystemConnect } from '../SystemPage'
+import { SystemPage } from '../SystemPage'
 
 export class UserLogoutData extends TestData {
   name = 'Alexandre Silva'
@@ -11,11 +11,8 @@ export class UserLogoutData extends TestData {
   msg = ''
 }
 
-export class UserLogoutMapping extends SystemConnect {
+export class UserLogoutPage extends SystemPage {
   public Submit = this.SetButton('Or click here to logout.')
-}
-
-export class UserLogoutPage extends UserLogoutMapping {
   async run(flow: UserLogoutData, success = true): Promise<boolean> {
     await this.home.AssertLogin(flow.name)
     await this.home.SettingsLink.click()

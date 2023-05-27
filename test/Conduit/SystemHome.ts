@@ -1,10 +1,10 @@
 import { Browser, Page } from 'playwright-core'
-import { SystemPage } from './SystemPage'
+import { SystemConnect } from './SystemPage'
 import { SystemSettings } from './SystemSettings'
 import { UserLoginScript } from './User/UserLogin'
 import { UserLogoutScript } from './User/UserLogout'
 
-export class SystemHome extends SystemPage {
+export class SystemHome extends SystemConnect {
   public HomeLink = this.SetLink('Home')
   public SigninLink = this.SetLink('Sign in')
   public SignupLink = this.SetLink('Sign up')
