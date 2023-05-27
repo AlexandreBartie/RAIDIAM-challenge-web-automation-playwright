@@ -1,13 +1,13 @@
 import { TestCases } from '../Model/TestCase'
 import { IDataFlowType } from '../Model/TestData'
 import { TestScenarios } from '../Model/TestScenario'
-import { IWebTestScript } from '../Script/TestScript'
+import { ITestScript } from '../Script/TestScript'
 
-export type WebTestTargetList = Array<WebTestTarget>
+export type TestTargetList = Array<WebTestTarget>
 
 export class WebTestTarget {
   public order: string
-  public script: IWebTestScript
+  public script: ITestScript
 
   get title(): string {
     return `${this.order}.${this.script.name}`
@@ -25,7 +25,7 @@ export class WebTestTarget {
     return await this.script.run(flow, success)
   }
 
-  constructor(order: string, script: IWebTestScript) {
+  constructor(order: string, script: ITestScript) {
     this.order = order
     this.script = script
   }

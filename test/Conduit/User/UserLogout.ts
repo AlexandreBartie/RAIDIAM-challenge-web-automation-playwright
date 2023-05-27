@@ -1,7 +1,7 @@
 import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
+import { TestScript } from '../../Framework/Script/TestScript'
 import { SystemHome } from '../SystemHome'
 import { SystemConnect } from '../SystemPage'
-import { SystemScript } from '../SystemScript'
 
 export class UserLogoutData extends TestData {
   name = 'Alexandre Silva'
@@ -24,15 +24,13 @@ export class UserLogoutPage extends UserLogoutMapping {
   }
 }
 
-export class UserLogoutScript extends SystemScript<
+export class UserLogoutScript extends TestScript<
   UserLogoutPage,
   UserLogoutData
 > {
   name = 'User Logout'
   constructor(home: SystemHome) {
-    super()
-    this.page = new UserLogoutPage()
-    this.data = new UserLogoutData()
+    super(UserLogoutPage, UserLogoutData)
 
     this.page.SetHome(home)
 
@@ -43,7 +41,7 @@ export class UserLogoutScript extends SystemScript<
     this.addTestDefault('Should logout using valid data')
   }
 
-  async run(flow: IDataFlowType, sucess: boolean): Promise<void> {
-    await this.page.run(this.getMerge(flow), sucess)
+  async run(flow: IDataFlowType, success = true): Promise<void> {
+    await this.page.run(this.getMerge(flow), success)
   }
 }

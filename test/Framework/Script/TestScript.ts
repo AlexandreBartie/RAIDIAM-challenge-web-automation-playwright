@@ -21,6 +21,11 @@ export abstract class TestScript<P extends TestPage, D extends TestData> {
     return this.suite.tests
   }
 
+  constructor(page: new () => P, data: new () => D) {
+    this.page = new page()
+    this.data = new data()
+  }
+
   setup(page: Page): void {
     this.page.SetDriver(page)
   }

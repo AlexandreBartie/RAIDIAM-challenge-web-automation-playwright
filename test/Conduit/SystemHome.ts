@@ -1,8 +1,8 @@
 import { Browser, Page } from 'playwright-core'
 import { SystemPage } from './SystemPage'
 import { SystemSettings } from './SystemSettings'
-import { UserLoginPage, UserLoginData } from './User/UserLogin'
-import { UserLogoutPage, UserLogoutData } from './User/UserLogout'
+import { UserLoginScript } from './User/UserLogin'
+import { UserLogoutScript } from './User/UserLogout'
 
 export class SystemHome extends SystemPage {
   public HomeLink = this.SetLink('Home')
@@ -41,14 +41,12 @@ export class SystemActions {
     this.home = home
   }
   async Login(): Promise<void> {
-    const login = new UserLoginPage()
-    login.SetHome(this.home)
-    await login.run(new UserLoginData())
+    const login = new UserLoginScript(this.home)
+    await login.run(login.data.getData())
   }
 
   async Logout(): Promise<void> {
-    const logout = new UserLogoutPage()
-    logout.SetHome(this.home)
-    await logout.run(new UserLogoutData())
+    const logout = new UserLogoutScript(this.home)
+    await logout.run(logout.data.getData())
   }
 }

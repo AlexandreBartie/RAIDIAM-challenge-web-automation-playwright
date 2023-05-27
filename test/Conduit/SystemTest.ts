@@ -1,9 +1,9 @@
-import { WebTestScope } from '../Framework/Perform/WebTestScope'
+import { TestScope } from '../Framework/Perform/TestScope'
 import { SystemHome } from './SystemHome'
 import { UserLoginScript } from './User/UserLogin'
 import { UserLogoutScript } from './User/UserLogout'
 
-export class SystemTest extends WebTestScope {
+export class SystemTest extends TestScope {
   public readonly home = new SystemHome()
 
   constructor() {

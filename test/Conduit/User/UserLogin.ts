@@ -1,7 +1,7 @@
 import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
+import { TestScript } from '../../Framework/Script/TestScript'
 import { SystemHome } from '../SystemHome'
 import { SystemConnect } from '../SystemPage'
-import { SystemScript } from '../SystemScript'
 
 export class UserLoginData extends TestData {
   name = 'Alexandre Silva'
@@ -33,15 +33,10 @@ export class UserLoginPage extends UserLoginMapping {
   }
 }
 
-export class UserLoginScript extends SystemScript<
-  UserLoginPage,
-  UserLoginData
-> {
+export class UserLoginScript extends TestScript<UserLoginPage, UserLoginData> {
   name = 'User Login'
   constructor(home: SystemHome) {
-    super()
-    this.page = new UserLoginPage()
-    this.data = new UserLoginData()
+    super(UserLoginPage, UserLoginData)
 
     this.page.SetHome(home)
 
@@ -78,7 +73,7 @@ export class UserLoginScript extends SystemScript<
     }
   }
 
-  async run(flow: IDataFlowType, sucess: boolean): Promise<void> {
+  async run(flow: IDataFlowType, sucess = true): Promise<void> {
     await this.page.run(this.getMerge(flow), sucess)
   }
 }
