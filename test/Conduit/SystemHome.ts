@@ -3,6 +3,7 @@ import { SystemConnect } from './SystemPage'
 import { SystemSettings } from './SystemSettings'
 import { UserLoginScript } from './User/UserLogin'
 import { UserLogoutScript } from './User/UserLogout'
+import { SystemContext } from './SystemContext'
 
 export class SystemHome extends SystemConnect {
   public HomeLink = this.SetLink('Home')
@@ -18,15 +19,28 @@ export class SystemHome extends SystemConnect {
 
   public readonly actions = new SystemActions(this)
 
+  public readonly context = new SystemContext(this)
+
   async start(browser: Browser): Promise<Page> {
     return this.SetDriver(await this.settings.start(browser))
   }
+
+  async isLoggin(): Promise<boolean> {
+    const isLoggin = this.SettingsLink.isVisible()
+    return isLoggin
+  }
+
+  async isLoggout(): Promise<boolean> {
+    const isLoggout = !this.isLoggin()
+    return isLoggout
+  }
+
   async AssertLogin(userName: string): Promise<boolean> {
     try {
-      this.HomeLink.AssertExist()
-      this.NewArticleLink.AssertExist()
-      this.SettingsLink.AssertExist()
-      this.ProfileLink.AssertExist(userName)
+      this.HomeLink.AssertIsVisible()
+      this.NewArticleLink.AssertIsVisible()
+      this.SettingsLink.AssertIsVisible()
+      this.ProfileLink.AssertIsVisible(userName)
       return true
     } catch {
       return false
@@ -40,13 +54,13 @@ export class SystemActions {
   constructor(home: SystemHome) {
     this.home = home
   }
-  async Login(): Promise<void> {
+  async Login(): Promise<boolean> {
     const login = new UserLoginScript(this.home)
-    await login.run(login.data.getData())
+    return await login.runDefault()
   }
 
-  async Logout(): Promise<void> {
+  async Logout(): Promise<boolean> {
     const logout = new UserLogoutScript(this.home)
-    await logout.run(logout.data.getData())
+    return await logout.runDefault()
   }
 }

@@ -17,17 +17,20 @@ export class UserLoginPage extends SystemPage {
   public Submit = this.SetButton('Sign in')
   public Message = this.SetList()
 
-  async run(flow: UserLoginData, success = true): Promise<void> {
+  async context(): Promise<boolean> {
+    return await this.setLogout()
+  }
+
+  async run(flow: UserLoginData, success = true): Promise<boolean> {
     await this.home.SigninLink.click()
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
     await this.Submit.click()
 
     if (success) {
-      this.home.AssertLogin(flow.name)
-    } else {
-      this.Assert(this.Message.hasText(flow.msg))
+      return this.home.AssertLogin(flow.name)
     }
+    return this.Message.AssertHasText(flow.msg)
   }
 }
 
@@ -37,11 +40,9 @@ export class UserLoginScript extends TestScript<UserLoginPage, UserLoginData> {
     super(UserLoginPage, UserLoginData)
 
     this.page.SetHome(home)
-
-    this.createTestCases()
   }
 
-  private createTestCases(): void {
+  setup(): void {
     this.addTestDefault('Should login using valid data')
     this.addScenario('Should check input incorret data')
     {
@@ -71,7 +72,8 @@ export class UserLoginScript extends TestScript<UserLoginPage, UserLoginData> {
     }
   }
 
-  async run(flow: IDataFlowType, sucess = true): Promise<void> {
-    await this.page.run(this.getMerge(flow), sucess)
+  async run(flow: IDataFlowType, sucess = true): Promise<boolean> {
+    this.page.context()
+    return await this.page.run(this.getMerge(flow), sucess)
   }
 }

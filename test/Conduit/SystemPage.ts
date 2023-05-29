@@ -1,6 +1,7 @@
 import { SystemHome } from './SystemHome'
 import { TestPage } from '../Framework/Script/TestPage'
 import { WebButton, WebLink, WebList, WebTextBox } from './SystemElement'
+import { UserLoginData } from './User/UserLogin'
 
 export class SystemConnect extends TestPage {
   public SetTextBox(title: string): WebTextBox {
@@ -20,10 +21,21 @@ export class SystemConnect extends TestPage {
   }
 }
 
-export class SystemPage extends SystemConnect {
+export abstract class SystemPage extends SystemConnect {
   public home: SystemHome
   SetHome(home: SystemHome): void {
     this.home = home
     this.SetDriver(this.home.driver)
   }
+  async setLogin(): Promise<boolean> {
+    return await this.home.context.setLogin()
+  }
+
+  async setLogout(): Promise<boolean> {
+    return await this.home.context.setLogin()
+  }
+
+  abstract context(): Promise<boolean>
+
+  abstract run(flow: UserLoginData, success: boolean): Promise<boolean>
 }

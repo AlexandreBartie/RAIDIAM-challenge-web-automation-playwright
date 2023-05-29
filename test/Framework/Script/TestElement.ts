@@ -1,4 +1,4 @@
-import { Locator } from 'playwright-core'
+import { ElementHandle, Locator } from 'playwright-core'
 import { TestPage } from './TestPage'
 import { findElementBy, roleType } from './TestTypes'
 
@@ -34,9 +34,10 @@ export class TestLocator {
   }
 
   public get locator(): Locator {
-    if (!this._locator) this.setLocator()
+    // if (!this._locator)
+    this.setLocator()
 
-    return this._locator
+    return this._locator // this._locator
   }
 
   // Setter
@@ -62,10 +63,10 @@ export class TestLocator {
       case findElementBy.findByRole:
         if (text) {
           this.setKey(text)
-          this._locator = this.web.findByRoleHasText(this.role, text)
+          this._locator = this.web.findByRole(this.role, text)
         } else {
           this.setKey(this.tag)
-          this._locator = this.web.findByRoleMatchName(this.role, this.tag)
+          this._locator = this.web.findByRole(this.role, this.tag)
         }
         break
 
@@ -76,14 +77,30 @@ export class TestLocator {
 }
 
 export class TestAtributes extends TestLocator {
-  isExist(text?: string): boolean {
-    if (text) this.setLocator(text)
-    return this.hasLocator
+  async handle(): Promise<null | ElementHandle<SVGElement | HTMLElement>> {
+    return await this.locator.elementHandle()
+  }
+
+  async attribute(name: string): Promise<string> {
+    let ret = await this.locator.getAttribute(name)
+
+    if (ret == null) return (ret = '')
+
+    return ret
+  }
+
+  async inputValue(): Promise<string> {
+    return await this.locator.inputValue()
   }
 
   async isVisible(text?: string): Promise<boolean> {
     if (text) this.setLocator(text)
-    return this.locator.isVisible()
+    const isVisible = await this.locator.isVisible()
+    // const locator = this.web.findByRole(this.role, this.tag)
+    // const rule = new RegExp(this.tag)
+    // const locator = this.web.driver.getByRole(this.role, { name: rule })
+    // const isVisible = await locator.isVisible()
+    return isVisible
   }
 
   hasText(text: string): boolean {
@@ -93,29 +110,20 @@ export class TestAtributes extends TestLocator {
 }
 
 export class TestAsserts extends TestAtributes {
-  AssertExist(text?: string): void {
-    this.web.Assert(this.isExist(text), `${this.key} not exist!`)
+  AssertOk(success: boolean, msg?: string): boolean {
+    return this.web.Assert(success, msg)
   }
 
-  async AssertIsVisible(text?: string): Promise<void> {
-    this.AssertExist(text)
-
-    const isVisible = await this.isVisible(text)
-
-    if (isVisible) {
-      console.log('Ok!')
-    }
-
-    if (!isVisible) {
-      console.log('Problems!')
-    }
-
-    this.web.Assert(await this.isVisible(text), `${this.key} not visible!`)
+  async AssertIsVisible(text?: string): Promise<boolean> {
+    return this.AssertOk(await this.isVisible(text), `${this.key} not visible!`)
   }
 
-  AssertHasText(text: string): void {
-    this.AssertExist(text)
-    this.web.Assert(this.hasText(text), `${this.key} not have ${text} text!`)
+  AssertHasText(text: string): boolean {
+    this.AssertIsVisible(text)
+    return this.AssertOk(
+      this.hasText(text),
+      `${this.key} not have ${text} text!`,
+    )
   }
 }
 export class TestElement<T> extends TestAsserts {

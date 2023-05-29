@@ -13,6 +13,9 @@ export class UserLogoutData extends TestData {
 
 export class UserLogoutPage extends SystemPage {
   public Submit = this.SetButton('Or click here to logout.')
+  async context(): Promise<boolean> {
+    return await this.setLogin()
+  }
   async run(flow: UserLogoutData, success = true): Promise<boolean> {
     await this.home.AssertLogin(flow.name)
     await this.home.SettingsLink.click()
@@ -30,15 +33,14 @@ export class UserLogoutScript extends TestScript<
     super(UserLogoutPage, UserLogoutData)
 
     this.page.SetHome(home)
-
-    this.createTestCases()
   }
 
-  private createTestCases(): void {
+  setup(): void {
     this.addTestDefault('Should logout using valid data')
   }
 
-  async run(flow: IDataFlowType, success = true): Promise<void> {
-    await this.page.run(this.getMerge(flow), success)
+  async run(flow: IDataFlowType, success = true): Promise<boolean> {
+    this.page.context()
+    return await this.page.run(this.getMerge(flow), success)
   }
 }

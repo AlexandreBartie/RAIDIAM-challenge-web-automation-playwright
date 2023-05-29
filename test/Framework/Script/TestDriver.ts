@@ -20,7 +20,8 @@ export class WebTestDriver {
     this._driver = driver
     return driver
   }
-  Assert(success: boolean, msg?: string): void {
+  Assert(success: boolean, msg?: string): boolean {
     expect(success, `${msg}`).toBeTruthy()
+    return success
   }
 }

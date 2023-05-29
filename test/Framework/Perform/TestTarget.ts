@@ -21,7 +21,8 @@ export class WebTestTarget {
     return this.scenarios.getTests()
   }
 
-  async run(flow: IDataFlowType, success: boolean): Promise<void> {
+  async run(flow: IDataFlowType, success: boolean): Promise<boolean> {
+    await this.script.setup()
     return await this.script.run(flow, success)
   }
 

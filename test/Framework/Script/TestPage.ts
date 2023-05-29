@@ -4,19 +4,21 @@ import { WebTestDriver } from './TestDriver'
 
 export class TestPage extends WebTestDriver {
   findByPlaceholder(title: string): Locator {
-    const locator = this.driver.getByPlaceholder(title)
+    const rule = new RegExp(title)
+    const locator = this.driver.getByPlaceholder(rule)
     return locator
   }
 
-  findByRoleMatchName(role: roleType, name: string): Locator {
-    const locator = this.driver.getByRole(role, { name: name })
+  findByRole(role: roleType, name: string): Locator {
+    const rule = new RegExp(name)
+    const locator = this.driver.getByRole(role, { name: rule })
     return locator
   }
 
-  findByRoleHasText(role: roleType, text: string): Locator {
-    const locator = this.driver.getByRole(role).filter({ hasText: text })
-    return locator
-  }
+  // findByRoleHasText(role: roleType, text: string): Locator {
+  //   const locator = this.driver.getByRole(role).filter({ hasText: text })
+  //   return locator
+  // }
 
   async pause(seconds = 0.5): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
