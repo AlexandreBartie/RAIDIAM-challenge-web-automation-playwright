@@ -3,9 +3,9 @@ import { IDataFlowType } from '../Model/TestData'
 import { TestScenarios } from '../Model/TestScenario'
 import { ITestScript } from '../Script/TestScript'
 
-export type TestTargetList = Array<WebTestTarget>
+export type TestTargetList = Array<TestTarget>
 
-export class WebTestTarget {
+export class TestTarget {
   public order: string
   public script: ITestScript
 
@@ -21,8 +21,12 @@ export class WebTestTarget {
     return this.scenarios.getTests()
   }
 
+  // setup(home: SystemHome): void {
+  //   this.script.setup()
+  //   this.script.ho
+  // }
+
   async run(flow: IDataFlowType, success: boolean): Promise<boolean> {
-    await this.script.setup()
     return await this.script.run(flow, success)
   }
 

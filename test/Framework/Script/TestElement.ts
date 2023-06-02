@@ -34,8 +34,7 @@ export class TestLocator {
   }
 
   public get locator(): Locator {
-    // if (!this._locator)
-    this.setLocator()
+    if (!this._locator) this.setLocator()
 
     return this._locator // this._locator
   }
@@ -94,13 +93,13 @@ export class TestAtributes extends TestLocator {
   }
 
   async isVisible(text?: string): Promise<boolean> {
-    if (text) this.setLocator(text)
-    const isVisible = await this.locator.isVisible()
-    // const locator = this.web.findByRole(this.role, this.tag)
-    // const rule = new RegExp(this.tag)
-    // const locator = this.web.driver.getByRole(this.role, { name: rule })
-    // const isVisible = await locator.isVisible()
-    return isVisible
+    if (text) {
+      this.setLocator(text)
+    }
+
+    const x = await this.locator.isVisible()
+
+    return x
   }
 
   hasText(text: string): boolean {
@@ -118,8 +117,8 @@ export class TestAsserts extends TestAtributes {
     return this.AssertOk(await this.isVisible(text), `${this.key} not visible!`)
   }
 
-  AssertHasText(text: string): boolean {
-    this.AssertIsVisible(text)
+  async AssertHasText(text: string): Promise<boolean> {
+    await this.AssertIsVisible(text)
     return this.AssertOk(
       this.hasText(text),
       `${this.key} not have ${text} text!`,

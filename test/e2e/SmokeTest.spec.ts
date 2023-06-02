@@ -8,6 +8,10 @@ test.describe('Smoke Testing', async () => {
     await e2e.home.start(browser)
   })
 
+  test.afterAll(async () => {
+    await e2e.home.end()
+  })
+
   test('Login', async () => {
     expect(await e2e.home.actions.Login()).toBeTruthy()
   })

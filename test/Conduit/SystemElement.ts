@@ -1,16 +1,20 @@
 import { TestElement } from '../Framework/Script/TestElement'
 
 export class WebClickable extends TestElement<WebClickable> {
-  async click(text?: string): Promise<void> {
-    if (text) this.setLocator(text)
-
+  async click(pause = 0.5): Promise<void> {
     if (this.hasLocator) {
       await this.pause()
       await this.locator.click()
-      await this.pause()
+      await this.pause(pause)
     } else {
       throw new Error(`WebClickable fail! The element '${this.tag}' dont find!`)
     }
+  }
+
+  async clickBy(text: string): Promise<void> {
+    this.setLocator(text)
+
+    return this.click()
   }
 }
 

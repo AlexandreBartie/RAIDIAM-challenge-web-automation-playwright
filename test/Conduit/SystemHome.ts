@@ -26,21 +26,21 @@ export class SystemHome extends SystemConnect {
   }
 
   async isLoggin(): Promise<boolean> {
-    const isLoggin = this.SettingsLink.isVisible()
+    const isLoggin = await this.SettingsLink.isVisible()
     return isLoggin
   }
 
   async isLoggout(): Promise<boolean> {
-    const isLoggout = !this.isLoggin()
+    const isLoggout = !(await this.isLoggin())
     return isLoggout
   }
 
   async AssertLogin(userName: string): Promise<boolean> {
     try {
-      this.HomeLink.AssertIsVisible()
-      this.NewArticleLink.AssertIsVisible()
-      this.SettingsLink.AssertIsVisible()
-      this.ProfileLink.AssertIsVisible(userName)
+      await this.HomeLink.AssertIsVisible()
+      await this.NewArticleLink.AssertIsVisible()
+      await this.SettingsLink.AssertIsVisible()
+      await this.ProfileLink.AssertIsVisible(userName)
       return true
     } catch {
       return false

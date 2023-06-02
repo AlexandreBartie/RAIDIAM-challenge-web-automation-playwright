@@ -15,7 +15,7 @@ export class TestCase implements ITestCase {
   data: IDataFlowType
 
   get title(): string {
-    return `${this.name}: ${this.scenario.title}`
+    return `${this.name} > ${this.scenario.title}`
   }
 
   constructor(

@@ -24,4 +24,8 @@ export class WebTestDriver {
     expect(success, `${msg}`).toBeTruthy()
     return success
   }
+
+  async end(): Promise<void> {
+    await this._driver.close()
+  }
 }
