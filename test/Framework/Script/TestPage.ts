@@ -15,6 +15,10 @@ export class TestPage extends WebTestDriver {
     return locator
   }
 
+  findByFilter(role: roleType, filter: string): Locator {
+    const locator = this.driver.getByRole(role).filter({ hasText: filter })
+    return locator
+  }
   async pause(seconds = 0.5): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
   }

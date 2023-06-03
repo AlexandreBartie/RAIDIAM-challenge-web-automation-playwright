@@ -16,8 +16,8 @@ export class SystemConnect extends TestPage {
     return new WebLink(this).setupByRole('link', title)
   }
 
-  public SetList(): WebList {
-    return new WebList(this).setupByRole('list')
+  public SetList(title?: string): WebList {
+    return new WebList(this).setupByFilter('list', title)
   }
 }
 
@@ -25,14 +25,22 @@ export abstract class SystemPage extends SystemConnect {
   public home: SystemHome
   SetHome(home: SystemHome): void {
     this.home = home
+  }
+
+  private setContextDriver(): void {
     this.SetDriver(this.home.driver)
   }
+
   async setContextLogin(): Promise<boolean> {
-    return await this.home.context.setLogin()
+    this.setContextDriver()
+    await this.home.context.setLogin()
+    return true
   }
 
   async setContextLogout(): Promise<boolean> {
-    return await this.home.context.setLogout()
+    this.setContextDriver()
+    await this.home.context.setLogout()
+    return true
   }
 
   abstract context(): Promise<boolean>

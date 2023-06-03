@@ -15,7 +15,7 @@ export class UserLoginPage extends SystemPage {
   public Email = this.SetTextBox('Email')
   public Password = this.SetTextBox('Password')
   public Submit = this.SetButton('Sign in')
-  public Message = this.SetList()
+  public Message = this.SetList('Message')
 
   async context(): Promise<boolean> {
     return await this.setContextLogout()
@@ -30,8 +30,7 @@ export class UserLoginPage extends SystemPage {
     if (success) {
       return await this.home.AssertLogin(flow.name)
     }
-    const y = await this.Message.AssertHasText(flow.msg)
-    return y
+    return await this.Message.AssertHasText(flow.msg)
   }
 }
 
@@ -47,32 +46,32 @@ export class UserLoginScript extends SystemScript<
 
   setup(): void {
     this.addTestDefault('Should login using valid data')
-    // this.addScenario('Should check input incorret data')
-    // {
-    //   this.addTestCaseNo('email is invalid', {
-    //     email: 'alexandre_bartie',
-    //     msg: 'email or password is invalid',
-    //   })
-    //   this.addTestCaseNo('email not exist', {
-    //     email: 'bartie_bartie@hotmail.com',
-    //     msg: 'email or password is invalid',
-    //   })
-    //   this.addTestCaseNo('password not match', {
-    //     password: '0987654321',
-    //     msg: 'email or password is invalid',
-    //   })
-    // }
-    // this.addScenario('Should check input blank data')
-    // {
-    //   this.addTestCaseNo('email is blank', {
-    //     email: '',
-    //     msg: `'email can't be blank'`,
-    //   })
-    //   this.addTestCaseNo('password is blank', {
-    //     password: '',
-    //     msg: `'password can't be blank'`,
-    //   })
-    // }
+    this.addScenario('Should check input incorret data')
+    {
+      this.addTestCaseNo('email is invalid', {
+        email: 'alexandre_bartie',
+        msg: 'email or password is invalid',
+      })
+      this.addTestCaseNo('email not exist', {
+        email: 'bartie_bartie@hotmail.com',
+        msg: 'email or password is invalid',
+      })
+      this.addTestCaseNo('password not match', {
+        password: '0987654321',
+        msg: 'email or password is invalid',
+      })
+    }
+    this.addScenario('Should check input blank data')
+    {
+      this.addTestCaseNo('email is blank', {
+        email: '',
+        msg: "email can't be blank",
+      })
+      this.addTestCaseNo('password is blank', {
+        password: '',
+        msg: "password can't be blank",
+      })
+    }
   }
 
   async run(flow: IDataFlowType, sucess = true): Promise<boolean> {

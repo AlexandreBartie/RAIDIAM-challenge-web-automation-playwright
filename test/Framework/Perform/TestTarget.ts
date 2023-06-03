@@ -1,5 +1,4 @@
-import { TestCases } from '../Model/TestCase'
-import { IDataFlowType } from '../Model/TestData'
+import { TestCase, TestCases } from '../Model/TestCase'
 import { TestScenarios } from '../Model/TestScenario'
 import { ITestScript } from '../Script/TestScript'
 
@@ -21,13 +20,13 @@ export class TestTarget {
     return this.scenarios.getTests()
   }
 
-  // setup(home: SystemHome): void {
-  //   this.script.setup()
-  //   this.script.ho
-  // }
+  setup(): void {
+    this.script.setup()
+  }
 
-  async run(flow: IDataFlowType, success: boolean): Promise<boolean> {
-    return await this.script.run(flow, success)
+  async run(test: TestCase): Promise<boolean> {
+    console.log(`test# ${test.name}: ${test.data.JSON}`)
+    return await this.script.run(test.data, test.success)
   }
 
   constructor(order: string, script: ITestScript) {

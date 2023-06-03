@@ -85,5 +85,6 @@ export type roleType =
 export enum findElementBy {
   findByID = 'id',
   findByRole = 'role',
+  findByFilter = 'filter',
   findByTitle = 'title',
 }

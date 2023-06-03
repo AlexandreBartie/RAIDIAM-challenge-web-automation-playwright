@@ -1,4 +1,4 @@
-// import { Page } from 'playwright-core'
+import { Page } from 'playwright-core'
 import { TestPage } from './TestPage'
 import { TestSuite } from '../Model/TestSuite'
 import { IDataFlowType, TestData } from '../Model/TestData'
@@ -26,9 +26,9 @@ export abstract class TestScript<P extends TestPage, D extends TestData> {
     this.data = new data()
   }
 
-  // setDriver(page: Page): void {
-  //   this.page.SetDriver(page)
-  // }
+  setDriver(page: Page): void {
+    this.page.SetDriver(page)
+  }
 
   getMerge(flow: IDataFlowType): D {
     return this.data.getMerge(flow) as D

@@ -18,6 +18,10 @@ export class TestCase implements ITestCase {
     return `${this.name} > ${this.scenario.title}`
   }
 
+  get json(): string {
+    return JSON.stringify(this)
+  }
+
   constructor(
     scenario: TestScenario,
     name: string,

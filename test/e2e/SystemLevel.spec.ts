@@ -8,12 +8,18 @@ for (const target of e2e.targets)
     test.beforeAll(async ({ browser }) => {
       await e2e.start(browser)
     })
+    test.afterAll(async () => {
+      await e2e.home.end()
+    })
 
-    // e2e.setup(target)
+    target.setup()
 
-    for (const testCase of target.tests) {
-      test(testCase.title, async () => {
-        await target.run(testCase.data, testCase.success)
+    for (const scenario of target.scenarios)
+      test.describe(scenario.title, () => {
+        for (const testCase of scenario.tests) {
+          test(testCase.title, async () => {
+            await target.run(testCase)
+          })
+        }
       })
-    }
   })

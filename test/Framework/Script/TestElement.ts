@@ -43,8 +43,11 @@ export class TestLocator {
   public setKey(key: string): void {
     this._key = key
   }
-  public setTitle(title: string): void {
-    this._tag = title
+  public setTitle(title?: string): void {
+    if (title) this._tag = title
+  }
+  public setFilter(filter: string): void {
+    this._tag = filter
   }
   public setFindby(findby: findElementBy): void {
     this._findby = findby
@@ -66,6 +69,16 @@ export class TestLocator {
         } else {
           this.setKey(this.tag)
           this._locator = this.web.findByRole(this.role, this.tag)
+        }
+        break
+
+      case findElementBy.findByFilter:
+        if (text) {
+          this.setKey(text)
+          this._locator = this.web.findByFilter(this.role, text)
+        } else {
+          this.setKey(this.tag)
+          this._locator = this.web.findByFilter(this.role, this.tag)
         }
         break
 
@@ -96,15 +109,12 @@ export class TestAtributes extends TestLocator {
     if (text) {
       this.setLocator(text)
     }
-
-    const x = await this.locator.isVisible()
-
-    return x
+    return await this.locator.isVisible()
   }
 
-  hasText(text: string): boolean {
+  async hasText(text: string): Promise<boolean> {
     this.setLocator(text)
-    return this.hasLocator
+    return await this.isVisible()
   }
 }
 
@@ -114,15 +124,13 @@ export class TestAsserts extends TestAtributes {
   }
 
   async AssertIsVisible(text?: string): Promise<boolean> {
-    return this.AssertOk(await this.isVisible(text), `${this.key} not visible!`)
+    const isVisible = await this.isVisible(text)
+    return this.AssertOk(isVisible, `${this.tag} not visible!`)
   }
 
   async AssertHasText(text: string): Promise<boolean> {
-    await this.AssertIsVisible(text)
-    return this.AssertOk(
-      this.hasText(text),
-      `${this.key} not have ${text} text!`,
-    )
+    const hasText = await this.hasText(text)
+    return this.AssertOk(hasText, `${this.tag} not have "${text}" text!`)
   }
 }
 export class TestElement<T> extends TestAsserts {
@@ -133,7 +141,14 @@ export class TestElement<T> extends TestAsserts {
   }
   setupByRole(role: roleType, title?: string): T {
     this.setRole(role)
-    if (title) this.setTitle(title)
+    this.setTitle(title)
+    return this as unknown as T
+  }
+
+  setupByFilter(role: roleType, title?: string): T {
+    this.setRole(role)
+    this.setTitle(title)
+    this.setFindby(findElementBy.findByFilter)
     return this as unknown as T
   }
 

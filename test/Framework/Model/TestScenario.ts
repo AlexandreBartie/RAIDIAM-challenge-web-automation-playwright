@@ -49,10 +49,8 @@ export class TestScenarios extends Array<TestScenario> {
   getTests(): TestCases {
     const list = new TestCases()
     for (const scenario of this) {
-      console.log(`${scenario.title}: ${scenario.tests.length}`)
       list.AddList(scenario.tests)
     }
-    console.log(`$Total: ${list.length}`)
     return list
   }
 }
