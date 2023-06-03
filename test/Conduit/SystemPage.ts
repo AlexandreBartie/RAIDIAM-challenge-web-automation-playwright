@@ -22,24 +22,24 @@ export class SystemConnect extends TestPage {
 }
 
 export abstract class SystemPage extends SystemConnect {
-  public home: SystemHome
-  SetHome(home: SystemHome): void {
-    this.home = home
+  public Home: SystemHome
+  setHome(home: SystemHome): void {
+    this.Home = home
   }
 
   private setContextDriver(): void {
-    this.SetDriver(this.home.driver)
+    this.SetDriver(this.Home.driver)
   }
 
   async setContextLogin(): Promise<boolean> {
     this.setContextDriver()
-    await this.home.context.setLogin()
+    await this.Home.context.setLogin()
     return true
   }
 
   async setContextLogout(): Promise<boolean> {
     this.setContextDriver()
-    await this.home.context.setLogout()
+    await this.Home.context.setLogout()
     return true
   }
 

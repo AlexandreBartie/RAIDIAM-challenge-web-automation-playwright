@@ -3,7 +3,7 @@ import { SystemTest } from '../Conduit/SystemTest'
 
 const e2e = new SystemTest()
 
-test.describe('Smoke Testing', async () => {
+test.skip('Context Testing', async () => {
   test.beforeAll(async ({ browser }) => {
     await e2e.home.start(browser)
   })

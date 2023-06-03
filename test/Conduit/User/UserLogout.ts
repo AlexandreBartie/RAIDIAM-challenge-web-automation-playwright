@@ -17,8 +17,9 @@ export class UserLogoutPage extends SystemPage {
     return await this.setContextLogin()
   }
   async run(flow: UserLogoutData, success = true): Promise<boolean> {
-    await this.home.SettingsLink.click()
-    await this.Submit.click()
+    await this.Home.SettingsLink.click()
+    await this.Submit.click(2)
+    await this.Home.AssertLogout()
     return success
   }
 }
@@ -29,16 +30,25 @@ export class UserLogoutScript extends SystemScript<
 > {
   name = 'User Logout'
   constructor(home: SystemHome) {
-    super(UserLogoutPage, UserLogoutData)
-    this.page.SetHome(home)
+    super(home, UserLogoutPage, UserLogoutData)
   }
 
   setup(): void {
     this.addTestDefault('Should logout using valid data')
+    // this.addScenario('Should different')
+    // {
+    //   this.addTestCaseOk('valid is Ok', {})
+    //   this.addTestCaseOk('valid is Very good', {})
+    // }
   }
 
   async run(flow: IDataFlowType, success = true): Promise<boolean> {
-    this.page.context()
-    return await this.page.run(this.getMerge(flow), success)
+    let result = false
+
+    if (await this.page.context()) {
+      result = await this.page.run(this.getMerge(flow), success)
+    }
+
+    return result
   }
 }

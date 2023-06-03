@@ -22,7 +22,8 @@ export class SystemHome extends SystemConnect {
   public readonly context = new SystemContext(this)
 
   async start(browser: Browser): Promise<Page> {
-    return this.SetDriver(await this.settings.start(browser))
+    const page = await this.settings.start(browser)
+    return this.SetDriver(page)
   }
 
   async isLoggin(): Promise<boolean> {
@@ -41,6 +42,17 @@ export class SystemHome extends SystemConnect {
       await this.NewArticleLink.AssertIsVisible()
       await this.SettingsLink.AssertIsVisible()
       await this.ProfileLink.AssertIsVisible(userName)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  async AssertLogout(): Promise<boolean> {
+    try {
+      await this.HomeLink.AssertIsVisible()
+      await this.SigninLink.AssertIsVisible()
+      await this.SignupLink.AssertIsVisible()
       return true
     } catch {
       return false

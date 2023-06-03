@@ -109,7 +109,14 @@ export class TestAtributes extends TestLocator {
     if (text) {
       this.setLocator(text)
     }
-    return await this.locator.isVisible()
+
+    try {
+      const isVisible = await this.locator.isVisible()
+      return isVisible
+    } catch (e) {
+      console.log(e)
+    }
+    return false
   }
 
   async hasText(text: string): Promise<boolean> {

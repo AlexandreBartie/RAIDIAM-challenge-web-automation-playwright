@@ -1,8 +1,8 @@
 import { Locator } from 'playwright-core'
 import { roleType } from './TestTypes'
-import { WebTestDriver } from './TestDriver'
+import { TestDriver } from './TestDriver'
 
-export class TestPage extends WebTestDriver {
+export class TestPage extends TestDriver {
   findByPlaceholder(title: string): Locator {
     const rule = new RegExp(title)
     const locator = this.driver.getByPlaceholder(rule)
@@ -18,8 +18,5 @@ export class TestPage extends WebTestDriver {
   findByFilter(role: roleType, filter: string): Locator {
     const locator = this.driver.getByRole(role).filter({ hasText: filter })
     return locator
-  }
-  async pause(seconds = 0.5): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
   }
 }

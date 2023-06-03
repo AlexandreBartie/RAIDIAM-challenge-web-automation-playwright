@@ -1,7 +1,7 @@
 import { Page } from 'playwright-core'
 import { expect } from '@playwright/test'
 
-export class WebTestDriver {
+export class TestDriver {
   private _driver: Page
 
   get driver(): Page {
@@ -27,5 +27,8 @@ export class WebTestDriver {
 
   async end(): Promise<void> {
     await this._driver.close()
+  }
+  async pause(seconds = 0.5): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
   }
 }

@@ -5,6 +5,6 @@ export class SystemSettings extends TestBrowser {
   url = 'http://localhost:8080/#/'
 
   // browser size settings
-  width = 1920
-  height = 1080
+  width = 700 // 1920
+  height = 700 // 1080
 }
