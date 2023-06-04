@@ -18,7 +18,8 @@ export class UserLoginPage extends SystemPage {
   public Message = this.SetList('Message')
 
   async context(): Promise<boolean> {
-    return await this.setContextLogout()
+    const isContext = await this.setContextLogout()
+    return isContext
   }
 
   async run(flow: UserLoginData, success = true): Promise<boolean> {

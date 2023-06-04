@@ -114,7 +114,7 @@ export class TestAtributes extends TestLocator {
       const isVisible = await this.locator.isVisible()
       return isVisible
     } catch (e) {
-      console.log(e)
+      console.log(`>>> Element not visible: ${this.tag}`)
     }
     return false
   }

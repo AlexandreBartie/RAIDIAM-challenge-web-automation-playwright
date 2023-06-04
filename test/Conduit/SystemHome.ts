@@ -28,11 +28,15 @@ export class SystemHome extends SystemConnect {
 
   async isLoggin(): Promise<boolean> {
     const isLoggin = await this.SettingsLink.isVisible()
+    const isLoggout = await this.SigninLink.isVisible()
+    console.log('Check: ', isLoggin, isLoggout)
     return isLoggin
   }
 
   async isLoggout(): Promise<boolean> {
-    const isLoggout = !(await this.isLoggin())
+    const isLoggin = await this.SettingsLink.isVisible()
+    const isLoggout = await this.SigninLink.isVisible()
+    console.log('Check: ', isLoggin, isLoggout)
     return isLoggout
   }
 

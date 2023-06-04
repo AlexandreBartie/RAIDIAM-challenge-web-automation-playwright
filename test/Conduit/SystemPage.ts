@@ -33,14 +33,14 @@ export abstract class SystemPage extends SystemConnect {
 
   async setContextLogin(): Promise<boolean> {
     this.setContextDriver()
-    await this.Home.context.setLogin()
-    return true
+    const isLogin = await this.Home.context.setLogin()
+    return isLogin
   }
 
   async setContextLogout(): Promise<boolean> {
     this.setContextDriver()
-    await this.Home.context.setLogout()
-    return true
+    const isLogout = this.Home.context.setLogout()
+    return isLogout
   }
 
   abstract context(): Promise<boolean>

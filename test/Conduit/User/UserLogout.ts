@@ -14,7 +14,8 @@ export class UserLogoutData extends TestData {
 export class UserLogoutPage extends SystemPage {
   public Submit = this.SetButton('Or click here to logout.')
   async context(): Promise<boolean> {
-    return await this.setContextLogin()
+    const isContext = await this.setContextLogin()
+    return isContext
   }
   async run(flow: UserLogoutData, success = true): Promise<boolean> {
     await this.Home.SettingsLink.click()
