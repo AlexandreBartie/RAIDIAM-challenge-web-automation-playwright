@@ -1,0 +1,27 @@
+[14:08:46] info: Scope [Autotest: System Level] was initialized.
+[14:08:46] info: Target [01.User Login] was added to the scope.
+[14:08:46] info: Target [02.User Logout] was added to the scope.
+[14:08:46] info: Script [User Login] has its testcases loaded.
+[14:08:46] info: Script [User Logout] has its testcases loaded.
+[14:08:47] info: The page driver was linked.
+[14:08:48] info: The page driver was linked.
+[14:08:48] info: Test# [default > Should login using valid data]
+[14:08:48] info: The page driver was linked.
+[14:08:48] info: Pause 0.5 seconds.
+[14:08:48] info: Element [Sign in] was clicked.
+[14:08:48] info: Pause 2 seconds.
+[14:08:50] info: Element [Email] was filled with [alexandre_bartie@hotmail.com].
+[14:08:50] info: Element [Password] was filled with [1234567890].
+[14:08:50] info: Pause 0.5 seconds.
+[14:08:51] info: Element [Sign in] was clicked.
+[14:08:51] info: Pause 2 seconds.
+[14:08:53] info: Test# [default > Should login using valid data] is OK.
+[14:08:53] info: The page driver was linked.
+[14:08:54] info: The page driver was linked.
+[14:08:54] info: Test# [default > Should logout using valid data]
+[14:08:54] info: The page driver was linked.
+[14:08:54] warn: Element [Settings] not exist.
+[14:08:54] warn: Element [Sign in] not exist.
+[14:08:54] warn: Element [Settings] not exist.
+[14:08:54] warn: Element [Sign in] not exist.
+[14:08:54] info: Test# [default > Should logout using valid data] is OK.

@@ -22,8 +22,8 @@ export class TestTarget {
   }
 
   setup(): void {
-    logger.info(`Target [${this.title}] is ready to run.`)
     this.script.setup()
+    logger.info(`Script [${this.script.name}] has its testcases loaded.`)
   }
 
   async run(test: TestCase): Promise<void> {

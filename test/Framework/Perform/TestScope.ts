@@ -11,7 +11,8 @@ export class TestScope {
   }
 
   Add(order: string, script: ITestScript): void {
-    this.targets.push(new TestTarget(order, script))
-    logger.info(`Script [${script.name}] was added to the scope..`)
+    const target = new TestTarget(order, script)
+    this.targets.push(target)
+    logger.info(`Target [${target.title}] was added to the scope.`)
   }
 }

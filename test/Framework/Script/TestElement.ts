@@ -1,7 +1,7 @@
 import { ElementHandle, Locator } from 'playwright-core'
 import { TestPage } from './TestPage'
 import { findElementBy, roleType } from './TestTypes'
-import { logger } from '../Script/TestLogger'
+import { logger } from './TestLogger'
 
 export class TestLocator {
   readonly web: TestPage

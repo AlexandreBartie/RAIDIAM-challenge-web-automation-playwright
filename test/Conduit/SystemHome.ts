@@ -30,14 +30,14 @@ export class SystemHome extends SystemConnect {
   async isLoggin(): Promise<boolean> {
     const isLoggin = await this.SettingsLink.isVisible()
     const isLoggout = await this.SigninLink.isVisible()
-    logger.info('Check: ', isLoggin, isLoggout)
+    logger.debug(`Check: isLoggin=>${isLoggin} isLoggout=>${isLoggout}`)
     return isLoggin
   }
 
   async isLoggout(): Promise<boolean> {
     const isLoggin = await this.SettingsLink.isVisible()
     const isLoggout = await this.SigninLink.isVisible()
-    logger.info('Check: ', isLoggin, isLoggout)
+    logger.debug(`Check: isLoggin=>${isLoggin} isLoggout=>${isLoggout}`)
     return isLoggout
   }
 
@@ -71,13 +71,13 @@ export class SystemActions {
   constructor(home: SystemHome) {
     this.home = home
   }
-  async Login(): Promise<boolean> {
+  async Login(): Promise<void> {
     const login = new UserLoginScript(this.home)
-    return await login.runDefault()
+    await login.runDefault()
   }
 
-  async Logout(): Promise<boolean> {
+  async Logout(): Promise<void> {
     const logout = new UserLogoutScript(this.home)
-    return await logout.runDefault()
+    await logout.runDefault()
   }
 }
