@@ -1,5 +1,6 @@
 import { Page } from 'playwright-core'
 import { expect } from '@playwright/test'
+import { logger } from './TestLogger'
 
 export class TestDriver {
   private _driver: Page
@@ -18,6 +19,7 @@ export class TestDriver {
 
   SetDriver(driver: Page): Page {
     this._driver = driver
+    logger.info('The page driver was linked.')
     return driver
   }
   Assert(success: boolean, msg?: string): boolean {
@@ -29,6 +31,7 @@ export class TestDriver {
     await this._driver.close()
   }
   async pause(seconds = 0.5): Promise<void> {
+    logger.info(`Pause ${seconds} seconds.`)
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
   }
 }

@@ -51,9 +51,9 @@ export abstract class TestScript<P extends TestPage, D extends TestData> {
   }
 
   abstract setup(): void
-  abstract run(flow: IDataFlowType, sucess: boolean): Promise<boolean>
+  abstract run(flow: IDataFlowType, sucess: boolean): Promise<void>
 
-  async runDefault(): Promise<boolean> {
-    return await this.run(this.data.getData(), true)
+  async runDefault(): Promise<void> {
+    await this.run(this.data.getData(), true)
   }
 }

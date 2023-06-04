@@ -1,6 +1,7 @@
 import { ElementHandle, Locator } from 'playwright-core'
 import { TestPage } from './TestPage'
 import { findElementBy, roleType } from './TestTypes'
+import { logger } from '../Script/TestLogger'
 
 export class TestLocator {
   readonly web: TestPage
@@ -114,7 +115,7 @@ export class TestAtributes extends TestLocator {
       const isVisible = await this.locator.isVisible()
       return isVisible
     } catch (e) {
-      console.log(`>>> Element not visible: ${this.tag}`)
+      logger.warn(`Element [${this.tag}] not exist.`)
     }
     return false
   }
@@ -127,6 +128,7 @@ export class TestAtributes extends TestLocator {
 
 export class TestAsserts extends TestAtributes {
   AssertOk(success: boolean, msg?: string): boolean {
+    if (!success && msg) logger.error(msg)
     return this.web.Assert(success, msg)
   }
 

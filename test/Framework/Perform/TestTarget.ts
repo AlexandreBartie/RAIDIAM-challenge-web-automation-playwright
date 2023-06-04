@@ -1,4 +1,5 @@
 import { TestCase, TestCases } from '../Model/TestCase'
+import { logger } from '../Script/TestLogger'
 import { TestScenarios } from '../Model/TestScenario'
 import { ITestScript } from '../Script/TestScript'
 
@@ -21,12 +22,15 @@ export class TestTarget {
   }
 
   setup(): void {
+    logger.info(`Target [${this.title}] is ready to run.`)
     this.script.setup()
   }
 
-  async run(test: TestCase): Promise<boolean> {
-    console.log(`test# ${test.name}: ${test.data.JSON}`)
-    return await this.script.run(test.data, test.success)
+  async run(test: TestCase): Promise<void> {
+    const title = `Test# [${test.title}]`
+    logger.info(`${title}`)
+    await this.script.run(test.data, test.success)
+    logger.info(`${title} is OK.`)
   }
 
   constructor(order: string, script: ITestScript) {

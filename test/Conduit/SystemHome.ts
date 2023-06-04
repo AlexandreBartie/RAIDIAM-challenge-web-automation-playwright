@@ -4,6 +4,7 @@ import { SystemSettings } from './SystemSettings'
 import { UserLoginScript } from './User/UserLogin'
 import { UserLogoutScript } from './User/UserLogout'
 import { SystemContext } from './SystemContext'
+import { logger } from '../Framework/Script/TestLogger'
 
 export class SystemHome extends SystemConnect {
   public HomeLink = this.SetLink('Home')
@@ -29,14 +30,14 @@ export class SystemHome extends SystemConnect {
   async isLoggin(): Promise<boolean> {
     const isLoggin = await this.SettingsLink.isVisible()
     const isLoggout = await this.SigninLink.isVisible()
-    console.log('Check: ', isLoggin, isLoggout)
+    logger.info('Check: ', isLoggin, isLoggout)
     return isLoggin
   }
 
   async isLoggout(): Promise<boolean> {
     const isLoggin = await this.SettingsLink.isVisible()
     const isLoggout = await this.SigninLink.isVisible()
-    console.log('Check: ', isLoggin, isLoggout)
+    logger.info('Check: ', isLoggin, isLoggout)
     return isLoggout
   }
 

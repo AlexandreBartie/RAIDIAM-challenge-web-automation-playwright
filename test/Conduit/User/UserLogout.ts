@@ -43,13 +43,9 @@ export class UserLogoutScript extends SystemScript<
     // }
   }
 
-  async run(flow: IDataFlowType, success = true): Promise<boolean> {
-    let result = false
-
+  async run(flow: IDataFlowType, success = true): Promise<void> {
     if (await this.page.context()) {
-      result = await this.page.run(this.getMerge(flow), success)
+      await this.page.run(this.getMerge(flow), success)
     }
-
-    return result
   }
 }

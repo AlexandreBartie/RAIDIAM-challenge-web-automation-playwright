@@ -1,3 +1,4 @@
+import { logger } from '../Framework/Script/TestLogger'
 import { TestElement } from '../Framework/Script/TestElement'
 
 export class WebClickable extends TestElement<WebClickable> {
@@ -5,6 +6,7 @@ export class WebClickable extends TestElement<WebClickable> {
     if (this.hasLocator) {
       await this.pause()
       await this.locator.click()
+      logger.info(`Element [${this.tag}] was clicked.`)
       await this.pause(pause)
     } else {
       throw new Error(`WebClickable fail! The element '${this.tag}' dont find!`)
@@ -13,7 +15,6 @@ export class WebClickable extends TestElement<WebClickable> {
 
   async clickBy(text: string): Promise<void> {
     this.setLocator(text)
-
     return this.click()
   }
 }
@@ -21,6 +22,7 @@ export class WebClickable extends TestElement<WebClickable> {
 export class WebTextBox extends TestElement<WebTextBox> {
   async fill(text: string): Promise<void> {
     await this.locator.fill(text)
+    logger.info(`Element [${this.tag}] was filled with [${text}].`)
   }
 }
 
