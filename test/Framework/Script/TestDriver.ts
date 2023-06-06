@@ -18,8 +18,8 @@ export class TestDriver {
   }
 
   SetDriver(driver: Page): Page {
+    if (!driver) logger.error('The page driver in null.')
     this._driver = driver
-    logger.info('The page driver was linked.')
     return driver
   }
   Assert(success: boolean, msg?: string): boolean {
@@ -29,6 +29,7 @@ export class TestDriver {
 
   async end(): Promise<void> {
     await this._driver.close()
+    logger.info('The page driver was closed.')
   }
   async pause(seconds = 0.5): Promise<void> {
     logger.info(`Pause ${seconds} seconds.`)

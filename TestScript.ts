@@ -1,9 +1,9 @@
 import { Page } from 'playwright-core'
-import { TestPage } from './TestPage'
-import { TestSuite } from '../Model/TestSuite'
-import { IDataFlowType, TestData } from '../Model/TestData'
-import { TestScenarios } from '../Model/TestScenario'
-import { TestCases } from '../Model/TestCase'
+import { TestPage } from './test/Framework/Script/TestPage'
+import { TestSuite } from './test/Framework/Model/TestSuite'
+import { IDataFlowType, TestData } from './test/Framework/Model/TestData'
+import { TestScenarios } from './test/Framework/Model/TestScenario'
+import { TestCases } from './test/Framework/Model/TestCase'
 
 export type ITestScript = TestScript<TestPage, TestData>
 export abstract class TestScript<P extends TestPage, D extends TestData> {
@@ -51,7 +51,7 @@ export abstract class TestScript<P extends TestPage, D extends TestData> {
   }
 
   abstract setup(): void
-  abstract run(flow: IDataFlowType, sucess: boolean): Promise<void>
+  abstract run(flow: unknown, sucess: boolean): Promise<void>
 
   async runDefault(): Promise<void> {
     await this.run(this.data.getData(), true)

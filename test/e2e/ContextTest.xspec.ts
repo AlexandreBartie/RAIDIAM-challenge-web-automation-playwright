@@ -1,7 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { SystemTest } from '../Conduit/SystemTest'
-
-const e2e = new SystemTest()
+import { e2e } from '../Conduit/SystemTest'
 
 test.skip('Context Testing', async () => {
   test.beforeAll(async ({ browser }) => {

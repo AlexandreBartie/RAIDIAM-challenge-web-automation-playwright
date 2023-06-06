@@ -5,7 +5,7 @@ import { UserLoginScript } from './User/UserLogin'
 import { TestTarget } from '../Framework/Perform/TestTarget'
 import { UserLogoutScript } from './User/UserLogout'
 
-export class SystemTest extends TestScope {
+class SystemTest extends TestScope {
   public readonly home = new SystemHome()
 
   private target: TestTarget
@@ -14,9 +14,13 @@ export class SystemTest extends TestScope {
     return await this.home.start(browser)
   }
 
-  constructor() {
-    super('Autotest: System Level')
+  constructor(title: string) {
+    super(title)
     this.Add('01', new UserLoginScript(this.home))
     this.Add('02', new UserLogoutScript(this.home))
   }
 }
+
+const e2e = new SystemTest('Autotest: System Level')
+
+export { e2e }

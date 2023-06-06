@@ -1,7 +1,7 @@
 import { TestCase, TestCases } from '../Model/TestCase'
 import { logger } from '../Script/TestLogger'
 import { TestScenarios } from '../Model/TestScenario'
-import { ITestScript } from '../Script/TestScript'
+import { ITestScript } from '../../../TestScript'
 
 export type TestTargetList = Array<TestTarget>
 
@@ -23,12 +23,12 @@ export class TestTarget {
 
   setup(): void {
     this.script.setup()
-    logger.info(`Script [${this.script.name}] has its testcases loaded.`)
+    logger.info(`Script [${this.script.name}] has its testcases added.`)
   }
 
   async run(test: TestCase): Promise<void> {
     const title = `Test# [${test.title}]`
-    logger.info(`${title}`)
+    logger.trace(`${title}`)
     await this.script.run(test.data, test.success)
     logger.info(`${title} is OK.`)
   }

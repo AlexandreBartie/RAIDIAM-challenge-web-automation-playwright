@@ -1,7 +1,7 @@
 import { SystemHome } from './SystemHome'
 import { TestPage } from '../Framework/Script/TestPage'
 import { WebButton, WebLink, WebList, WebTextBox } from './SystemElement'
-import { UserLoginData } from './User/UserLogin'
+import { logger } from '../Framework/Script/TestLogger'
 
 export class SystemConnect extends TestPage {
   public SetTextBox(title: string): WebTextBox {
@@ -29,6 +29,7 @@ export abstract class SystemPage extends SystemConnect {
 
   private setContextDriver(): void {
     this.SetDriver(this.Home.driver)
+    logger.info('The PAGE driver was set.')
   }
 
   async setContextLogin(): Promise<boolean> {
@@ -45,5 +46,5 @@ export abstract class SystemPage extends SystemConnect {
 
   abstract context(): Promise<boolean>
 
-  abstract run(flow: UserLoginData, success: boolean): Promise<boolean>
+  abstract run(flow: unknown, success: boolean): Promise<boolean>
 }

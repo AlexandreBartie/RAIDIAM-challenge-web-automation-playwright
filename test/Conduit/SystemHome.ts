@@ -24,6 +24,7 @@ export class SystemHome extends SystemConnect {
 
   async start(browser: Browser): Promise<Page> {
     const page = await this.settings.start(browser)
+    logger.info('The HOME driver was set.')
     return this.SetDriver(page)
   }
 

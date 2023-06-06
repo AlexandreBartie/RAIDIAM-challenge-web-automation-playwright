@@ -1,5 +1,0 @@
-[14:08:46] info: Scope [Autotest: System Level] was initialized.
-[14:08:46] info: Target [01.User Login] was added to the scope.
-[14:08:46] info: Target [02.User Logout] was added to the scope.
-[14:08:46] info: Script [User Login] has its testcases loaded.
-[14:08:46] info: Script [User Logout] has its testcases loaded.

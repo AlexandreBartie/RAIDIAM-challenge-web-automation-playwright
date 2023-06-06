@@ -5,4 +5,5 @@ node_modules/
 /playwright-report/
 /playwright/.cache/
 /test-results/
+/test-logs/
 /test/test*.spec.ts

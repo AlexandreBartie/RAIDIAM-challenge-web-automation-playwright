@@ -1,5 +1,5 @@
 import { logger } from '../Script/TestLogger'
-import { ITestScript } from '../Script/TestScript'
+import { ITestScript } from '../../../TestScript'
 import { TestTarget, TestTargetList } from './TestTarget'
 
 export class TestScope {

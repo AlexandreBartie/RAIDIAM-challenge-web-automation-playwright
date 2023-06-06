@@ -6,6 +6,11 @@ import path from 'path'
 class TestLoggerActions {
   protected logger: winston.Logger
 
+  trace(msg: string, trace = '-'): void {
+    this.logger.info(trace.repeat(20))
+    this.info(msg)
+  }
+
   info(msg: string): void {
     this.logger.info(msg)
   }

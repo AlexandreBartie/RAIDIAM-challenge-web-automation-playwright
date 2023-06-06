@@ -1,4 +1,4 @@
-import { IDataFlowType, TestData } from '../../Framework/Model/TestData'
+import { TestData } from '../../Framework/Model/TestData'
 import { SystemHome } from '../SystemHome'
 import { SystemPage } from '../SystemPage'
 import { SystemScript } from '../SystemScript'
@@ -43,9 +43,12 @@ export class UserLogoutScript extends SystemScript<
     // }
   }
 
-  async run(flow: IDataFlowType, success = true): Promise<void> {
-    if (await this.page.context()) {
-      await this.page.run(this.getMerge(flow), success)
-    }
-  }
+  // async run(flow: IDataFlowType, success = true): Promise<void> {
+  //   if (await this.page.context()) {
+  //     await this.page.run(this.getMerge(flow), success)
+  //   } else this.AssertFail('Context steps failed!')
+  // }
+  // async run(flow: IDataFlowType, success = true): Promise<void> {
+  //   await this.runner(this.getMerge(flow), success)
+  // }
 }

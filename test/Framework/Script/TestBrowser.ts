@@ -1,5 +1,6 @@
 import { Browser, Page } from 'playwright-core'
 import { TestPage } from './TestPage'
+import { logger } from './TestLogger'
 
 export class TestBrowser {
   public url: string
@@ -11,6 +12,7 @@ export class TestBrowser {
 
   async start(browser: Browser): Promise<Page> {
     this.page.SetDriver(await (await browser.newContext()).newPage())
+    logger.trace('The driver was created.', '=')
     await this.setViewportSize(this.width, this.height)
     await this.go(this.url)
     return this.page.driver
