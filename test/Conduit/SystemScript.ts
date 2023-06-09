@@ -1,5 +1,5 @@
 import { IDataFlowType, TestData } from '../Framework/Model/TestData'
-import { TestScript } from '../../TestScript'
+import { TestScript } from '../Framework/Script/TestScript'
 import { SystemHome } from './SystemHome'
 import { SystemPage } from './SystemPage'
 
@@ -12,19 +12,11 @@ export abstract class SystemScript<
     this.page.setHome(home)
   }
 
-  // async run(flow: IDataFlowType, success = true): Promise<boolean> {
-  //   this.page.context()
-  //   return await this.page.run(this.getMerge(flow), success)
-  // }
-
-  async run(flow: IDataFlowType, success = true): Promise<void> {
+  async run(flow: IDataFlowType, success = true): Promise<boolean> {
     if (await this.page.context()) {
       const merge = this.getMerge(flow)
-      await this.page.run(merge, success)
+      return await this.page.run(merge, success)
     } else this.AssertFail('Context steps failed!')
-  }
-
-  AssertFail(msg: string): void {
-    this.page.Assert(false, msg)
+    return false
   }
 }

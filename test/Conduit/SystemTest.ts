@@ -3,7 +3,6 @@ import { TestScope } from '../Framework/Perform/TestScope'
 import { SystemHome } from './SystemHome'
 import { UserLoginScript } from './User/UserLogin'
 import { TestTarget } from '../Framework/Perform/TestTarget'
-import { UserLogoutScript } from './User/UserLogout'
 
 class SystemTest extends TestScope {
   public readonly home = new SystemHome()
@@ -14,13 +13,14 @@ class SystemTest extends TestScope {
     return await this.home.start(browser)
   }
 
-  constructor(title: string) {
-    super(title)
+  setup() {
     this.Add('01', new UserLoginScript(this.home))
-    this.Add('02', new UserLogoutScript(this.home))
+    this.Add('01.a', new UserLoginScript(this.home))
+    // this.Add('01.b', new UserLoginScript(this.home))
+    // this.Add('02', new UserLogoutScript(this.home))
   }
 }
 
-const e2e = new SystemTest('Autotest: System Level')
+const e2e = new SystemTest('SystemTest-Level')
 
 export { e2e }

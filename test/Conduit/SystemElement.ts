@@ -2,15 +2,10 @@ import { logger } from '../Framework/Script/TestLogger'
 import { TestElement } from '../Framework/Script/TestElement'
 
 export class WebClickable extends TestElement<WebClickable> {
-  async click(pause = 0.5): Promise<void> {
-    if (this.hasLocator) {
-      await this.pause()
-      await this.locator.click()
-      logger.info(`Element [${this.tag}] was clicked.`)
-      await this.pause(pause)
-    } else {
-      throw new Error(`WebClickable fail! The element '${this.tag}' dont find!`)
-    }
+  async click(): Promise<void> {
+    await this.locator.click()
+    await this.web.waitLoad()
+    logger.action(this.tag, 'was clicked.')
   }
 
   async clickBy(text: string): Promise<void> {

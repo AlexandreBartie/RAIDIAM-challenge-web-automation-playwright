@@ -13,17 +13,30 @@ export class TestDriver {
     return !this._driver
   }
 
+  get isClosed(): boolean {
+    return this.driver.isClosed()
+  }
+
   constructor(driver?: Page) {
     if (driver) this._driver = driver
   }
 
-  SetDriver(driver: Page): Page {
+  async waitLoad(): Promise<void> {
+    await this.driver.waitForLoadState('networkidle') // 'domcontentloaded')
+  }
+
+  setDriver(driver: Page): Page {
     if (!driver) logger.error('The page driver in null.')
     this._driver = driver
+    if (this.isClosed) logger.error('The page driver is closed.')
     return driver
   }
-  Assert(success: boolean, msg?: string): boolean {
-    expect(success, `${msg}`).toBeTruthy()
+  assert(success: boolean, msg: string): boolean {
+    const msgError = `${msg} was FAILED!`
+    if (success) logger.info(msg)
+    else logger.error(msgError)
+
+    expect(success, msgError).toBeTruthy()
     return success
   }
 

@@ -1,7 +1,7 @@
 import { TestCase, TestCases } from '../Model/TestCase'
 import { logger } from '../Script/TestLogger'
 import { TestScenarios } from '../Model/TestScenario'
-import { ITestScript } from '../../../TestScript'
+import { ITestScript } from '../Script/TestScript'
 
 export type TestTargetList = Array<TestTarget>
 
@@ -21,20 +21,24 @@ export class TestTarget {
     return this.scenarios.getTests()
   }
 
+  constructor(order: string, script: ITestScript) {
+    this.order = order
+    this.script = script
+  }
+
   setup(): void {
     this.script.setup()
-    logger.info(`Script [${this.script.name}] has its testcases added.`)
   }
 
   async run(test: TestCase): Promise<void> {
     const title = `Test# [${test.title}]`
     logger.trace(`${title}`)
-    await this.script.run(test.data, test.success)
-    logger.info(`${title} is OK.`)
-  }
+    const result = await this.script.run(test.data, test.success)
 
-  constructor(order: string, script: ITestScript) {
-    this.order = order
-    this.script = script
+    if (result) {
+      logger.info(`Test# Result is OK.`)
+    } else {
+      this.script.AssertFail(`Test# Result is Fail.`)
+    }
   }
 }

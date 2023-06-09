@@ -28,7 +28,7 @@ export abstract class SystemPage extends SystemConnect {
   }
 
   private setContextDriver(): void {
-    this.SetDriver(this.Home.driver)
+    this.setDriver(this.Home.driver)
     logger.info('The PAGE driver was set.')
   }
 

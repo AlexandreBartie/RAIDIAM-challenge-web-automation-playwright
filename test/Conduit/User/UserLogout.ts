@@ -19,7 +19,7 @@ export class UserLogoutPage extends SystemPage {
   }
   async run(flow: UserLogoutData, success = true): Promise<boolean> {
     await this.Home.SettingsLink.click()
-    await this.Submit.click(2)
+    await this.Submit.click()
     await this.Home.AssertLogout()
     return success
   }

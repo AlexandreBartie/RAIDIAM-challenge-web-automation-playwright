@@ -25,20 +25,24 @@ export class SystemHome extends SystemConnect {
   async start(browser: Browser): Promise<Page> {
     const page = await this.settings.start(browser)
     logger.info('The HOME driver was set.')
-    return this.SetDriver(page)
+    return this.setDriver(page)
   }
 
   async isLoggin(): Promise<boolean> {
     const isLoggin = await this.SettingsLink.isVisible()
     const isLoggout = await this.SigninLink.isVisible()
-    logger.debug(`Check: isLoggin=>${isLoggin} isLoggout=>${isLoggout}`)
+    if (!isLoggin && !isLoggout) {
+      logger.error(`Check isLoggin and isLoggout`)
+    }
     return isLoggin
   }
 
   async isLoggout(): Promise<boolean> {
     const isLoggin = await this.SettingsLink.isVisible()
     const isLoggout = await this.SigninLink.isVisible()
-    logger.debug(`Check: isLoggin=>${isLoggin} isLoggout=>${isLoggout}`)
+    if (!isLoggin && !isLoggout) {
+      logger.error(`Check isLoggin and isLoggout`)
+    }
     return isLoggout
   }
 

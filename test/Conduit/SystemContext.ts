@@ -11,8 +11,9 @@ export class SystemContext {
   async setLogin(): Promise<boolean> {
     const isLoggout = await this.home.isLoggout()
     if (isLoggout) {
-      logger.info('Context: Login will be executed')
+      logger.info('Context >>> Login will be executed')
       await this.home.actions.Login()
+      logger.info('Context >>> Login was executed')
     }
     return await this.home.isLoggin()
   }
@@ -20,8 +21,9 @@ export class SystemContext {
   async setLogout(): Promise<boolean> {
     const isLoggin = await this.home.isLoggin()
     if (isLoggin) {
-      logger.info('Context: Logout will be executed')
+      logger.info('Context >>> Logout will be executed')
       await this.home.actions.Logout()
+      logger.info('Context >>> Logout was executed')
     }
     return await this.home.isLoggout()
   }

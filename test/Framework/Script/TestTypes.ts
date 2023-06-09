@@ -1,3 +1,5 @@
+export type stateType = 'attached' | 'detached' | 'visible' | 'hidden'
+
 export type roleType =
   | 'alert'
   | 'alertdialog'

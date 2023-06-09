@@ -23,10 +23,10 @@ export class UserLoginPage extends SystemPage {
   }
 
   async run(flow: UserLoginData, success = true): Promise<boolean> {
-    await this.Home.SigninLink.click(2)
+    await this.Home.SigninLink.click()
     await this.Email.fill(flow.email)
     await this.Password.fill(flow.password)
-    await this.Submit.click(2)
+    await this.Submit.click()
 
     if (success) {
       return await this.Home.AssertLogin(flow.name)
@@ -46,21 +46,21 @@ export class UserLoginScript extends SystemScript<
 
   setup(): void {
     this.addTestDefault('Should login using valid data')
-    // this.addScenario('Should check input incorret data')
-    // {
-    //   this.addTestCaseNo('email is invalid', {
-    //     email: 'alexandre_bartie',
-    //     msg: 'email or password is invalid',
-    //   })
-    //   this.addTestCaseNo('email not exist', {
-    //     email: 'bartie_bartie@hotmail.com',
-    //     msg: 'email or password is invalid',
-    //   })
-    //   this.addTestCaseNo('password not match', {
-    //     password: '0987654321',
-    //     msg: 'email or password is invalid',
-    //   })
-    // }
+    this.addScenario('Should check input incorret data')
+    {
+      this.addTestCaseNo('email is invalid', {
+        email: 'alexandre_bartie',
+        msg: 'email or password is invalid',
+      })
+      this.addTestCaseNo('email not exist', {
+        email: 'bartie_bartie@hotmail.com',
+        msg: 'email ff password is invalid',
+      })
+      this.addTestCaseNo('password not match', {
+        password: '0987654321',
+        msg: 'email or password is invalid',
+      })
+    }
     // this.addScenario('Should check input blank data')
     // {
     //   this.addTestCaseNo('email is blank', {

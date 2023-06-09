@@ -37,6 +37,10 @@
     {
       "filePath": "test\\Conduit",
       "group": "Default"
+    },
+    {
+      "filePath": "test-logs",
+      "group": "Default"
     }
   ],
 }

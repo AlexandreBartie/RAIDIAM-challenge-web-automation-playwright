@@ -1,9 +1,9 @@
-import { Page } from 'playwright-core'
-import { TestPage } from './test/Framework/Script/TestPage'
-import { TestSuite } from './test/Framework/Model/TestSuite'
-import { IDataFlowType, TestData } from './test/Framework/Model/TestData'
-import { TestScenarios } from './test/Framework/Model/TestScenario'
-import { TestCases } from './test/Framework/Model/TestCase'
+import { TestPage } from './TestPage'
+import { TestSuite } from '../Model/TestSuite'
+import { IDataFlowType, TestData } from '../Model/TestData'
+import { TestScenarios } from '../Model/TestScenario'
+import { TestCases } from '../Model/TestCase'
+import { logger } from './TestLogger'
 
 export type ITestScript = TestScript<TestPage, TestData>
 export abstract class TestScript<P extends TestPage, D extends TestData> {
@@ -24,10 +24,6 @@ export abstract class TestScript<P extends TestPage, D extends TestData> {
   constructor(page: new () => P, data: new () => D) {
     this.page = new page()
     this.data = new data()
-  }
-
-  setDriver(page: Page): void {
-    this.page.SetDriver(page)
   }
 
   getMerge(flow: IDataFlowType): D {
@@ -51,9 +47,14 @@ export abstract class TestScript<P extends TestPage, D extends TestData> {
   }
 
   abstract setup(): void
-  abstract run(flow: unknown, sucess: boolean): Promise<void>
+  abstract run(flow: unknown, sucess: boolean): Promise<boolean>
 
-  async runDefault(): Promise<void> {
-    await this.run(this.data.getData(), true)
+  async runDefault(): Promise<boolean> {
+    return await this.run(this.data.getData(), true)
+  }
+
+  AssertFail(msg: string): void {
+    this.page.assert(false, msg)
+    logger.error(msg)
   }
 }

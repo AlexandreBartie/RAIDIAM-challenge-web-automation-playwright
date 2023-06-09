@@ -1,7 +1,7 @@
 import { test } from '@playwright/test'
 import { e2e } from '../Conduit/SystemTest'
 
-console.log(e2e.title)
+e2e.setup()
 
 test.describe(e2e.title, async () => {
   for (const target of e2e.targets) {
@@ -26,3 +26,5 @@ test.describe(e2e.title, async () => {
     })
   }
 })
+
+e2e.setup()
