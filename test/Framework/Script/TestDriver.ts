@@ -18,6 +18,9 @@ export class TestDriver {
   get isClosed(): boolean {
     return this.driver.isClosed()
   }
+  private get label(): string {
+    return 'The PAGE driver'
+  }
 
   constructor(driver?: Page) {
     if (driver) this._driver = driver
@@ -28,9 +31,9 @@ export class TestDriver {
   }
 
   setDriver(driver: Page): Page {
-    if (!driver) logger.error('The page driver in null.')
+    if (!driver) logger.error(`${this.label} is null.`)
     this._driver = driver
-    if (this.isClosed) logger.error('The page driver is closed.')
+    if (this.isClosed) logger.error(`${this.label} is closed.`)
     return driver
   }
   assert(success: boolean, msg: string): boolean {
@@ -48,7 +51,7 @@ export class TestDriver {
 
   async end(): Promise<void> {
     await this._driver.close()
-    logger.info('The page driver was closed.')
+    logger.info(`${this.label} was closed.`)
   }
   async pause(seconds = 0.5): Promise<void> {
     logger.info(`Pause ${seconds} seconds.`)

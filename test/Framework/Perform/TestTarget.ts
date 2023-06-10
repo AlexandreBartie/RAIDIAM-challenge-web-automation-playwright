@@ -28,6 +28,7 @@ export class TestTarget {
 
   setup(): void {
     this.script.setup()
+    logger.info(`Target ${this.title} was read to run.`)
   }
 
   async run(test: TestCase): Promise<void> {

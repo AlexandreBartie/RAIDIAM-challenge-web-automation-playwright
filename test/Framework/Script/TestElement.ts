@@ -90,7 +90,11 @@ export class TestLocator {
 
   async waitForClick(text?: string): Promise<boolean> {
     if (await this.waitForVisible(text)) {
+      this.web.waitLoad('load')
+      this.web.pause(0.1)
       this.locator.click()
+      this.web.pause(0.1)
+      this.web.waitLoad('load')
       return true
     }
     return false
@@ -108,6 +112,14 @@ export class TestLocator {
     } catch (e) {
       return false
     }
+  }
+
+  logAction(msg: string): void {
+    logger.info(this.msgAction(msg))
+  }
+
+  msgAction(msg: string): string {
+    return `The ${this.role.toUpperCase()} [${this.tag}] ${msg}`
   }
 }
 
@@ -133,7 +145,7 @@ export class TestAtributes extends TestLocator {
       await this.waitForVisible(text)
       return true
     } catch (error) {
-      logger.warn(`Element [${this.tag}] not exist.`)
+      logger.warn(this.msgAction('not exist.'))
     }
     return false
   }
@@ -150,12 +162,12 @@ export class TestAsserts extends TestAtributes {
 
   async AssertIsVisible(text?: string): Promise<boolean> {
     const isVisible = await this.waitForVisible(text)
-    return this.AssertOk(isVisible, `Element [${this.tag}] is visible!`)
+    return this.AssertOk(isVisible, this.msgAction('is visible.'))
   }
 
   async AssertHasText(text: string): Promise<boolean> {
     const hasText = await this.waitForVisible(text)
-    return this.AssertOk(hasText, `Element [${this.tag}] has "${text}"`)
+    return this.AssertOk(hasText, this.msgAction(`has "${text}"`))
   }
 }
 export class TestElement<T> extends TestAsserts {

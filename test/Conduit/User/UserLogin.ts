@@ -61,17 +61,17 @@ export class UserLoginScript extends SystemScript<
         msg: 'email or password is invalid',
       })
     }
-    // this.addScenario('Should check input blank data')
-    // {
-    //   this.addTestCaseNo('email is blank', {
-    //     email: '',
-    //     msg: "email can't be blank",
-    //   })
-    //   this.addTestCaseNo('password is blank', {
-    //     password: '',
-    //     msg: "password can't be blank",
-    //   })
-    // }
+    this.addScenario('Should check input blank data')
+    {
+      this.addTestCaseNo('email is blank', {
+        email: '',
+        msg: "email can't be blank",
+      })
+      this.addTestCaseNo('password is blank', {
+        password: '',
+        msg: "password can't be blank",
+      })
+    }
   }
 
   // async run(flow: IDataFlowType, success = true): Promise<void> {

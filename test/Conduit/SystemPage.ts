@@ -30,7 +30,7 @@ export abstract class SystemPage extends SystemConnect {
 
   private setContextDriver(): void {
     this.setDriver(this.Home.driver)
-    logger.info('The PAGE driver was set.')
+    logger.info('PAGE driver was set.')
   }
 
   async setContextLogin(): Promise<boolean> {

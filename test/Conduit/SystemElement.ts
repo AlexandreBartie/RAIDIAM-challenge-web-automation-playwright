@@ -4,7 +4,7 @@ import { TestElement } from '../Framework/Script/TestElement'
 export class WebClickable extends TestElement<WebClickable> {
   async click(): Promise<void> {
     if (await this.waitForClick()) {
-      logger.action(this.tag, 'was clicked.')
+      this.logAction('was clicked.')
     } else logger.error('Action click was failed!')
   }
 
@@ -16,8 +16,10 @@ export class WebClickable extends TestElement<WebClickable> {
 
 export class WebTextBox extends TestElement<WebTextBox> {
   async fill(text: string): Promise<void> {
-    await this.locator.fill(text)
-    logger.info(`Element [${this.tag}] was filled with [${text}].`)
+    if (await this.waitForVisible()) {
+      await this.locator.fill(text)
+      this.logAction(`was filled with [${text}].`)
+    } else logger.error('Action fill was failed!')
   }
 }
 

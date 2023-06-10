@@ -12,7 +12,7 @@ export class UserLogoutData extends TestData {
 }
 
 export class UserLogoutPage extends SystemPage {
-  public Submit = this.SetButton('Or click here to logout.')
+  public Submit = this.SetButton('click here to logout')
   async context(): Promise<boolean> {
     const isContext = await this.setContextLogin()
     return isContext
