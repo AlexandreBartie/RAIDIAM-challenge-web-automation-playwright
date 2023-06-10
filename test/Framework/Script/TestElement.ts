@@ -88,20 +88,26 @@ export class TestLocator {
     }
   }
 
-  async waitForVisible(text?: string): Promise<boolean> {
-    return this.waitFor(text, 'visible')
+  async waitForClick(text?: string): Promise<boolean> {
+    if (await this.waitForVisible(text)) {
+      this.locator.click()
+      return true
+    }
+    return false
   }
 
-  private async waitFor(text?: string, type?: stateType): Promise<boolean> {
+  async waitForVisible(text?: string): Promise<boolean> {
+    return await this.waitFor('visible', text)
+  }
+
+  private async waitFor(type: stateType, text?: string): Promise<boolean> {
     this.setLocator(text)
-    if (type) {
-      try {
-        await this.locator.waitFor({ state: type, timeout: 5000 })
-      } catch (e) {
-        return false
-      }
+    try {
+      await this.locator.waitFor({ state: type, timeout: 7000 })
+      return true
+    } catch (e) {
+      return false
     }
-    return true
   }
 }
 
@@ -122,24 +128,9 @@ export class TestAtributes extends TestLocator {
     return await this.locator.inputValue()
   }
 
-  async isWait(text?: string): Promise<void> {
-    if (text) {
-      this.setLocator(text)
-    }
-    await this.locator.waitFor()
-  }
-
   async isExist(text?: string): Promise<boolean> {
-    if (text) {
-      this.setLocator(text)
-    }
-
     try {
-      const x = await this.locator.isVisible()
-      if (this.tag == 'Message' && !x) {
-        console.log(x)
-      }
-
+      await this.waitForVisible(text)
       return true
     } catch (error) {
       logger.warn(`Element [${this.tag}] not exist.`)
@@ -148,16 +139,7 @@ export class TestAtributes extends TestLocator {
   }
 
   async isVisible(text?: string): Promise<boolean> {
-    let isVisible = false
-    if (await this.isExist(text)) {
-      isVisible = await this.locator.isVisible()
-    }
-    return isVisible
-  }
-
-  async hasText(text?: string): Promise<boolean> {
-    const hasText = await this.isExist(text)
-    return hasText
+    return await this.waitForVisible(text)
   }
 }
 
@@ -168,37 +150,17 @@ export class TestAsserts extends TestAtributes {
 
   async AssertIsVisible(text?: string): Promise<boolean> {
     const isVisible = await this.waitForVisible(text)
-    if (!isVisible) {
-      console.log('Stop')
-    }
-    // const isVisible = await this.isVisible()
-    // if (!isVisible) {
-    //   console.log('stop')
-    //   const isVisible2 = await this.isVisible()
-    //   console.log(isVisible2)
-    // }
     return this.AssertOk(isVisible, `Element [${this.tag}] is visible!`)
   }
 
   async AssertHasText(text: string): Promise<boolean> {
     const hasText = await this.waitForVisible(text)
-    if (!hasText) {
-      console.log('Stop')
-    }
-
-    // await expect(locator).toHaveText()
-
-    // const hasText = await this.hasText(text)
-    // if (!hasText) {
-    //   console.log('Ok')
-    //   const x = await this.hasText(text)
-    //   console.log(x)
-    // }
     return this.AssertOk(hasText, `Element [${this.tag}] has "${text}"`)
   }
 }
 export class TestElement<T> extends TestAsserts {
-  setupByTitle(title: string): T {
+  setupByTitle(role: roleType, title: string): T {
+    this.setRole(role)
     this.setTitle(title)
     this.setFindby(findElementBy.findByTitle)
     return this as unknown as T

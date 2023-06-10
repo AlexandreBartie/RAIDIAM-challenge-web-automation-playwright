@@ -5,7 +5,7 @@ import { logger } from '../Framework/Script/TestLogger'
 
 export class SystemConnect extends TestPage {
   public SetTextBox(title: string): WebTextBox {
-    return new WebTextBox(this).setupByTitle(title)
+    return new WebTextBox(this).setupByTitle('textbox', title)
   }
 
   public SetButton(title: string): WebButton {
@@ -44,17 +44,6 @@ export abstract class SystemPage extends SystemConnect {
     const isLogout = this.Home.context.setup('Logout')
     return isLogout
   }
-
-  // async AssertContext(): Promise<boolean> {
-  //   const msg = `Context [${context}] is Ok`
-  //   const isContext = await this.context()
-  //   if (isContext) {
-  //     logger.context(context, 'is Ok')
-  //     return true
-  //   }
-  //   this.assert(isContext, msg)
-  //   return false
-  // }
 
   abstract context(): Promise<boolean>
 

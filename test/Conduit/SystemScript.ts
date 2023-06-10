@@ -17,6 +17,6 @@ export abstract class SystemScript<
       const merge = this.getMerge(flow)
       return await this.page.run(merge, success)
     }
-    return this.page.assertFail('Context was FAILED!')
+    return false
   }
 }

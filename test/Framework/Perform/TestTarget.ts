@@ -38,7 +38,7 @@ export class TestTarget {
     if (result) {
       logger.info(`Test# Result is OK.`)
     } else {
-      this.script.page.assertFail(`Test# Result is Fail.`)
+      this.script.page.assertFail(`Test# Result`)
     }
   }
 }

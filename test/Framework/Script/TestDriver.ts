@@ -2,6 +2,8 @@ import { Page } from 'playwright-core'
 import { expect } from '@playwright/test'
 import { logger } from './TestLogger'
 
+export type loadType = 'load' | 'domcontentloaded' | 'networkidle'
+
 export class TestDriver {
   private _driver: Page
 
@@ -21,8 +23,8 @@ export class TestDriver {
     if (driver) this._driver = driver
   }
 
-  async waitLoad(): Promise<void> {
-    await this.driver.waitForLoadState('networkidle') // 'domcontentloaded')
+  async waitLoad(type: loadType): Promise<void> {
+    await this.driver.waitForLoadState(type)
   }
 
   setDriver(driver: Page): Page {

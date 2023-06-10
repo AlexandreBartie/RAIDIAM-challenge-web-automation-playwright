@@ -11,7 +11,7 @@ export class TestBrowser {
   height: number
 
   async start(browser: Browser): Promise<Page> {
-    this.page.setDriver(await browser.newPage()) //    .newContext()).newPage())
+    this.page.setDriver(await (await browser.newContext()).newPage()) //    .newContext()).newPage())
     logger.trace('The driver was created.', '=')
     await this.setViewportSize(this.width, this.height)
     await this.go(this.url)
@@ -25,6 +25,6 @@ export class TestBrowser {
   private async go(url: string): Promise<void> {
     await this.page.driver.bringToFront()
     await this.page.driver.goto(url)
-    await this.page.waitLoad()
+    await this.page.waitLoad('load')
   }
 }

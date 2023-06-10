@@ -3,9 +3,9 @@ import { TestElement } from '../Framework/Script/TestElement'
 
 export class WebClickable extends TestElement<WebClickable> {
   async click(): Promise<void> {
-    await this.locator.click()
-    await this.web.waitLoad()
-    logger.action(this.tag, 'was clicked.')
+    if (await this.waitForClick()) {
+      logger.action(this.tag, 'was clicked.')
+    } else logger.error('Action click was failed!')
   }
 
   async clickBy(text: string): Promise<void> {

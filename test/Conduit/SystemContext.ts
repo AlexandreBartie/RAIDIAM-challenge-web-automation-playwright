@@ -13,6 +13,7 @@ export class SystemContext {
 
   async setup(type: contextType): Promise<boolean> {
     this.type = type
+    this.home.waitLoad('load')
     switch (type) {
       case 'Login':
         return await this.setLogin()
@@ -48,7 +49,7 @@ export class SystemContext {
 
   private logContextDone(success: boolean): boolean {
     if (success) logger.debug('Context was ready.')
-    else logger.error('Context was FAILLLLLLLLLLLLED!')
+    else logger.error('Context was fail!')
     return success
   }
 }
