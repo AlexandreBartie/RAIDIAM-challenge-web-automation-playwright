@@ -76,13 +76,15 @@ export class SystemActions {
   constructor(home: SystemHome) {
     this.home = home
   }
-  async Login(): Promise<void> {
+  async Login(): Promise<boolean> {
     const login = new UserLoginScript(this.home)
     await login.runDefault()
+    return await this.home.isLoggin()
   }
 
-  async Logout(): Promise<void> {
+  async Logout(): Promise<boolean> {
     const logout = new UserLogoutScript(this.home)
     await logout.runDefault()
+    return await this.home.isLoggout()
   }
 }

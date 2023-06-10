@@ -40,6 +40,10 @@ export class TestDriver {
     return success
   }
 
+  assertFail(msg: string): boolean {
+    return this.assert(false, msg)
+  }
+
   async end(): Promise<void> {
     await this._driver.close()
     logger.info('The page driver was closed.')

@@ -10,17 +10,17 @@ export class LoggerSettings {
   private output = new LoggerOutput('./test-logs')
 
   newLogger(level: levelType): winston.Logger {
-    return winston.createLogger({
+    const logger = winston.createLogger({
       level: level,
       format: this.getFormat(),
       // defaultMeta: { service: 'user-service' },
       transports: [this.AddLogConsole(level), this.AddLogFile(level)],
     })
+    return logger
   }
 
   private getFormat(): winston.Logform.Format {
     return format.combine(
-      format.colorize({ all: true }),
       format.timestamp({ format: this.timeFormat }),
       format.printf(
         (info) => `[${info.timestamp}] ${info.level}: ${info.message}`,

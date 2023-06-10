@@ -54,7 +54,7 @@ export class UserLoginScript extends SystemScript<
       })
       this.addTestCaseNo('email not exist', {
         email: 'bartie_bartie@hotmail.com',
-        msg: 'email ff password is invalid',
+        msg: 'email or password is invalid',
       })
       this.addTestCaseNo('password not match', {
         password: '0987654321',

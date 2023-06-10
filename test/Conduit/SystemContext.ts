@@ -1,30 +1,54 @@
 import { logger } from '../Framework/Script/TestLogger'
 import { SystemHome } from './SystemHome'
 
+export type contextType = 'Login' | 'Logout'
 export class SystemContext {
   private home: SystemHome
+
+  private type: contextType
 
   constructor(home: SystemHome) {
     this.home = home
   }
 
-  async setLogin(): Promise<boolean> {
-    const isLoggout = await this.home.isLoggout()
-    if (isLoggout) {
-      logger.info('Context >>> Login will be executed')
-      await this.home.actions.Login()
-      logger.info('Context >>> Login was executed')
+  async setup(type: contextType): Promise<boolean> {
+    this.type = type
+    switch (type) {
+      case 'Login':
+        return await this.setLogin()
+
+      case 'Logout':
+        return await this.setLogout()
     }
-    return await this.home.isLoggin()
   }
 
-  async setLogout(): Promise<boolean> {
-    const isLoggin = await this.home.isLoggin()
-    if (isLoggin) {
-      logger.info('Context >>> Logout will be executed')
-      await this.home.actions.Logout()
-      logger.info('Context >>> Logout was executed')
+  private async setLogin(): Promise<boolean> {
+    if (await this.home.isLoggin()) return true
+
+    if (await this.home.isLoggout()) {
+      this.logContextBuilding()
+      await this.home.actions.Login()
     }
-    return await this.home.isLoggout()
+    return this.logContextDone(await this.home.isLoggin())
+  }
+
+  private async setLogout(): Promise<boolean> {
+    if (await this.home.isLoggout()) return true
+
+    if (await this.home.isLoggin()) {
+      this.logContextBuilding()
+      await this.home.actions.Logout()
+    }
+    return this.logContextDone(await this.home.isLoggout())
+  }
+
+  private logContextBuilding(): void {
+    logger.debug(`Context [${this.type}] will be setup.`)
+  }
+
+  private logContextDone(success: boolean): boolean {
+    if (success) logger.debug('Context was ready.')
+    else logger.error('Context was FAILLLLLLLLLLLLED!')
+    return success
   }
 }

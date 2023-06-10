@@ -25,12 +25,14 @@ class LoggerMsg {
 }
 
 export class LoggerActions extends LoggerMsg {
+  private sizeTrace = 35
+
   action(name: string, msg: string): void {
     this.info(`Element [${name}] ${msg}`)
   }
 
   trace(msg: string, trace = '-'): void {
-    this.logger.info(trace.repeat(20))
+    this.logger.info(trace.repeat(this.sizeTrace))
     this.info(msg)
   }
 }

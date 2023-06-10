@@ -23,6 +23,7 @@ export class SystemConnect extends TestPage {
 
 export abstract class SystemPage extends SystemConnect {
   public Home: SystemHome
+
   setHome(home: SystemHome): void {
     this.Home = home
   }
@@ -34,15 +35,26 @@ export abstract class SystemPage extends SystemConnect {
 
   async setContextLogin(): Promise<boolean> {
     this.setContextDriver()
-    const isLogin = await this.Home.context.setLogin()
+    const isLogin = await this.Home.context.setup('Login')
     return isLogin
   }
 
   async setContextLogout(): Promise<boolean> {
     this.setContextDriver()
-    const isLogout = this.Home.context.setLogout()
+    const isLogout = this.Home.context.setup('Logout')
     return isLogout
   }
+
+  // async AssertContext(): Promise<boolean> {
+  //   const msg = `Context [${context}] is Ok`
+  //   const isContext = await this.context()
+  //   if (isContext) {
+  //     logger.context(context, 'is Ok')
+  //     return true
+  //   }
+  //   this.assert(isContext, msg)
+  //   return false
+  // }
 
   abstract context(): Promise<boolean>
 

@@ -3,7 +3,6 @@ import { TestSuite } from '../Model/TestSuite'
 import { IDataFlowType, TestData } from '../Model/TestData'
 import { TestScenarios } from '../Model/TestScenario'
 import { TestCases } from '../Model/TestCase'
-import { logger } from './TestLogger'
 
 export type ITestScript = TestScript<TestPage, TestData>
 export abstract class TestScript<P extends TestPage, D extends TestData> {
@@ -51,10 +50,5 @@ export abstract class TestScript<P extends TestPage, D extends TestData> {
 
   async runDefault(): Promise<boolean> {
     return await this.run(this.data.getData(), true)
-  }
-
-  AssertFail(msg: string): void {
-    this.page.assert(false, msg)
-    logger.error(msg)
   }
 }
